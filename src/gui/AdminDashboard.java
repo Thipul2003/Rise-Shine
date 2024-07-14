@@ -19,6 +19,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         this.email = email;
         jPanel9.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
         this.setExtendedState(MAXIMIZED_BOTH);
+        loadDashboard();
 
     }
 
@@ -26,9 +27,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         initComponents();
         jPanel9.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
         this.setExtendedState(MAXIMIZED_BOTH);
-        Dashboard db2 = new Dashboard();//dashboard jPanel
-        rightPanel.add(db2, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(db2);
+        loadDashboard();
     }
 
 //    public news n = new news();
@@ -52,8 +51,10 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         if (dashboardBtn.isSelected()) {
             Dashboard db2 = new Dashboard();//dashboard jPanel
+            rightPanel.removeAll();
             rightPanel.add(db2, BorderLayout.CENTER);
-            SwingUtilities.updateComponentTreeUI(this);
+            rightPanel.revalidate();
+            rightPanel.repaint();
         } else {
             System.out.println("HOi");
         }
@@ -113,11 +114,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         stockBtn = new javax.swing.JToggleButton();
         invoiceBtn = new javax.swing.JToggleButton();
         profileBtn = new javax.swing.JToggleButton();
-        rightPanel = new javax.swing.JPanel();
         topBar = new javax.swing.JPanel();
         leftTopBar = new javax.swing.JPanel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         rightTopBar = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         setting = new javax.swing.JButton();
@@ -125,6 +125,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         notification = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         centerTopBar = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        rightPanel = new javax.swing.JPanel();
         contentCenter = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,16 +183,15 @@ public class AdminDashboard extends javax.swing.JFrame {
         logoPanelCenterLayout.setHorizontalGroup(
             logoPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoPanelCenterLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
         logoPanelCenterLayout.setVerticalGroup(
             logoPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoPanelCenterLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1))
         );
 
         logoPanel.add(logoPanelCenter, java.awt.BorderLayout.CENTER);
@@ -609,41 +611,34 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         getContentPane().add(leftPanel, java.awt.BorderLayout.LINE_START);
 
-        rightPanel.setLayout(new java.awt.BorderLayout());
-
         topBar.setBackground(new java.awt.Color(255, 255, 255));
         topBar.setPreferredSize(new java.awt.Dimension(968, 70));
         topBar.setLayout(new java.awt.BorderLayout());
 
         leftTopBar.setBackground(new java.awt.Color(255, 255, 255));
-        leftTopBar.setPreferredSize(new java.awt.Dimension(250, 64));
+        leftTopBar.setPreferredSize(new java.awt.Dimension(300, 64));
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel27.setText("Hi Welcome Back , ");
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel2.setText("jLabel1");
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("1:009 AM");
+        jPanel1.add(jLabel6, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout leftTopBarLayout = new javax.swing.GroupLayout(leftTopBar);
         leftTopBar.setLayout(leftTopBarLayout);
         leftTopBarLayout.setHorizontalGroup(
             leftTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftTopBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel27)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         leftTopBarLayout.setVerticalGroup(
             leftTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftTopBarLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(leftTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel2))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         topBar.add(leftTopBar, java.awt.BorderLayout.LINE_START);
@@ -744,11 +739,9 @@ public class AdminDashboard extends javax.swing.JFrame {
             rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightTopBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+                .addGroup(rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -757,20 +750,39 @@ public class AdminDashboard extends javax.swing.JFrame {
         centerTopBar.setBackground(new java.awt.Color(255, 255, 255));
         centerTopBar.setPreferredSize(new java.awt.Dimension(500, 50));
 
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel27.setText("Hi Welcome Back , ");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel2.setText("jLabel1");
+
         javax.swing.GroupLayout centerTopBarLayout = new javax.swing.GroupLayout(centerTopBar);
         centerTopBar.setLayout(centerTopBarLayout);
         centerTopBarLayout.setHorizontalGroup(
             centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 368, Short.MAX_VALUE)
+            .addGroup(centerTopBarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                .addGap(169, 169, 169))
         );
         centerTopBarLayout.setVerticalGroup(
             centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(centerTopBarLayout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel27))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         topBar.add(centerTopBar, java.awt.BorderLayout.CENTER);
 
-        rightPanel.add(topBar, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(topBar, java.awt.BorderLayout.PAGE_START);
+
+        rightPanel.setLayout(new java.awt.BorderLayout());
 
         contentCenter.setLayout(new javax.swing.BoxLayout(contentCenter, javax.swing.BoxLayout.LINE_AXIS));
         rightPanel.add(contentCenter, java.awt.BorderLayout.CENTER);
@@ -948,86 +960,131 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void dashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBtnActionPerformed
         returns();
         Dashboard dash = new Dashboard();
+        rightPanel.removeAll();
         rightPanel.add(dash, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(dash);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_dashboardBtnActionPerformed
 
     private void userBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBtnActionPerformed
         returns();
         Users user = new Users();
+        rightPanel.removeAll();
         rightPanel.add(user, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(user);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
 
     }//GEN-LAST:event_userBtnActionPerformed
 
     private void customerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerBtnActionPerformed
         returns();
         Customers customer = new Customers();
+        rightPanel.removeAll();
         rightPanel.add(customer, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(customer);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_customerBtnActionPerformed
 
     private void productBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productBtnActionPerformed
         returns();
         Products product = new Products();
+        rightPanel.removeAll();
         rightPanel.add(product, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(product);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_productBtnActionPerformed
 
     private void brandBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandBtnActionPerformed
         returns();
         Brands brand = new Brands();
+        rightPanel.removeAll();
         rightPanel.add(brand, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(brand);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_brandBtnActionPerformed
 
     private void categoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryBtnActionPerformed
         returns();
         Category category = new Category();
+        rightPanel.removeAll();
         rightPanel.add(category, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(category);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_categoryBtnActionPerformed
 
     private void supplierBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierBtn1ActionPerformed
         returns();
         Suppliers supplier = new Suppliers();
+        rightPanel.removeAll();
         rightPanel.add(supplier, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(supplier);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_supplierBtn1ActionPerformed
 
     private void companyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyBtnActionPerformed
         returns();
         Company company = new Company();
+        rightPanel.removeAll();
         rightPanel.add(company, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(company);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_companyBtnActionPerformed
 
     private void stockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockBtnActionPerformed
         returns();
         Stock stock = new Stock();
+        rightPanel.removeAll();
         rightPanel.add(stock, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(stock);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_stockBtnActionPerformed
 
     private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
         returns();
         GReturnN greturn = new GReturnN();
+        rightPanel.removeAll();
         rightPanel.add(greturn, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(greturn);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_returnBtnActionPerformed
 
     private void invoiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceBtnActionPerformed
         returns();
         Invoice invoice = new Invoice();
+        rightPanel.removeAll();
         rightPanel.add(invoice, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(invoice);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
+
     }//GEN-LAST:event_invoiceBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         returns();
         Profile profile = new Profile();
+        rightPanel.removeAll();
         rightPanel.add(profile, BorderLayout.CENTER);
-        SwingUtilities.updateComponentTreeUI(profile);
+        rightPanel.revalidate();
+        rightPanel.repaint();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void settingFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_settingFocusGained
@@ -1154,6 +1211,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
