@@ -12,7 +12,6 @@ import java.io.File;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 public class Brands extends javax.swing.JPanel {
 
