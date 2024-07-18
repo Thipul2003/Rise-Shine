@@ -1,6 +1,12 @@
 package gui;
 
+import Model.MySQL;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -8,9 +14,50 @@ import javax.swing.filechooser.FileSystemView;
 
 public class AddCategory extends javax.swing.JDialog {
 
+    private Category category;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public AddCategory(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    private void reset() {
+        Category_name.setText("");
+        jtextfield2.setText("No file Selected");
+        this.dispose();
+    }
+
+    private String getFileExtension(String filename) {
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex >= 0) {
+            return filename.substring(dotIndex + 1);
+        } else {
+            return "";
+        }
+    }
+
+    private void save_InsertImage(String category_name) {
+
+        String imagePath = jtextfield2.getText();
+        String ext = getFileExtension(imagePath);
+        File destinationFile = new File("src\\Backup\\Categories\\" + Category_name.getText() + "." + ext);
+        String getImage = "src\\\\Backup\\\\Categories\\\\" + Category_name.getText() + "." + ext;
+
+        try {
+            BufferedImage image = ImageIO.read(new File(imagePath));
+            ImageIO.write(image, ext, destinationFile);
+
+            MySQL.execute("INSERT INTO `category`(`name`,`img`) VALUES('" + category_name + "','" + getImage + "')");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -144,7 +191,7 @@ public class AddCategory extends javax.swing.JDialog {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Exception", JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -162,37 +209,35 @@ public class AddCategory extends javax.swing.JDialog {
     }//GEN-LAST:event_jtextfield2ActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-//        String category_name = Category_name.getText();
-//        String pic_path = jtextfield2.getText();
-//
-//        if (category_name.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Empty name field", "Error", JOptionPane.ERROR_MESSAGE);
-//        } else if (pic_path.equals("No file selected")) {
-//            JOptionPane.showMessageDialog(this, "No image Selected", "Error", JOptionPane.ERROR_MESSAGE);
-//
-//        } else {
-//            try {
-//                ResultSet resultSet = MySQL.execute("SELECT * FROM `category` WHERE `name`='" + category_name + "'");
-//                if (resultSet.next()) {
-//                    JOptionPane.showMessageDialog(this, "Category Already Exist", "Warning", JOptionPane.WARNING_MESSAGE);
-//
-//                } else {
-//                    save_InsertImage(category_name);
-//                    reset();
-//                    try {
-//                        cf.reload();
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(this, e.getMessage(), "Exception", JOptionPane.WARNING_MESSAGE);
-//                    }
-//                    JOptionPane.showMessageDialog(this, "Category added", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
-//
-//                }
-//
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, e.getMessage(), "Exception", JOptionPane.WARNING_MESSAGE);
-//
-//            }
-//        }
+        String category_name = Category_name.getText();
+        String pic_path = jtextfield2.getText();
+
+        if (category_name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty name field", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (pic_path.equals("No file selected")) {
+            JOptionPane.showMessageDialog(this, "No image Selected", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            try {
+                ResultSet resultSet = MySQL.execute("SELECT * FROM `category` WHERE `name`='" + category_name + "'");
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Category Already Exist", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+                    save_InsertImage(category_name);
+                    reset();
+                    if (category != null) {
+                        category.reload();
+                    }
+                    JOptionPane.showMessageDialog(this, "Category added", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
     }//GEN-LAST:event_addBtnActionPerformed
 
     /**

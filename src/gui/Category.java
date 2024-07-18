@@ -316,6 +316,7 @@ public class Category extends javax.swing.JPanel {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         AddCategory ac = new AddCategory(ad, true);
+        ac.setCategory(this);
         ac.setVisible(true);
     }//GEN-LAST:event_addButtonActionPerformed
 

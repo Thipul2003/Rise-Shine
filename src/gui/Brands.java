@@ -319,6 +319,7 @@ public class Brands extends javax.swing.JPanel {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         AddBrand ab = new AddBrand(ad, true);
+        ab.setBrand(this);
         ab.setVisible(true);
 
     }//GEN-LAST:event_addButtonActionPerformed

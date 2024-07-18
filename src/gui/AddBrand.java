@@ -1,6 +1,12 @@
 package gui;
 
+import Model.MySQL;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -9,9 +15,55 @@ import javax.swing.filechooser.FileSystemView;
 
 public class AddBrand extends javax.swing.JDialog {
 
+    private Brands brand;
+
+    public void setBrand(Brands brand) {
+        this.brand = brand;
+    }
+    
+
     public AddBrand(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    private void reset() {
+        Brand_name.setText("");
+        jtextfield2.setText("No file Selected");
+        this.dispose();
+    }
+
+    public static String getFileExtension(String filename) {
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex >= 0) {
+            return filename.substring(dotIndex + 1);
+        } else {
+            return "";
+        }
+    }
+
+    private void save_InsertImage(String brand_name) {
+
+        String imagePath = jtextfield2.getText();
+        String ext = getFileExtension(imagePath);
+        File destinationFile = new File("src\\Backup\\Brands\\" + Brand_name.getText() + "." + ext);
+        String getImage = "src\\\\Backup\\\\Brands\\\\" + Brand_name.getText() + "." + ext;
+
+        try {
+            BufferedImage image = ImageIO.read(new File(imagePath));
+            ImageIO.write(image, ext, destinationFile);
+            try {
+                MySQL.execute("INSERT INTO `brand`(`name`,`img`) VALUES('" + brand_name + "','" + getImage + "')");
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -120,8 +172,8 @@ public class AddBrand extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
 
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getFileSystemView().getHomeDirectory());
-            j.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "jfif"));
+            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            j.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "jfif", "svg"));
             // invoke the showsOpenDialog function to show the save dialog
             int r = j.showOpenDialog(null);
 
@@ -144,7 +196,7 @@ public class AddBrand extends javax.swing.JDialog {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Exception", JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -163,71 +215,34 @@ public class AddBrand extends javax.swing.JDialog {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
 
-//        if (bf != null && b == null) {
-//
-//            String brand_name = Brand_name.getText();
-//            String pic_path = jtextfield2.getText();
-//
-//            if (brand_name.isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Empty name field", "Error", JOptionPane.ERROR_MESSAGE);
-//            } else if (pic_path.equals("No file selected")) {
-//                JOptionPane.showMessageDialog(this, "No image Selected", "Error", JOptionPane.ERROR_MESSAGE);
-//
-//            } else {
-//                try {
-//                    ResultSet resultSet = MySQL.execute("SELECT * FROM `brand` WHERE `name`='" + brand_name + "'");
-//                    if (resultSet.next()) {
-//                        JOptionPane.showMessageDialog(this, "Brand Already Exist", "Warning", JOptionPane.WARNING_MESSAGE);
-//
-//                    } else {
-//                        save_InsertImage(brand_name);
-//                        reset();
-//                        try {
-//                            bf.reload();
-//                        } catch (Exception e) {
-//                            JOptionPane.showMessageDialog(this, e.getMessage(), "Exception", JOptionPane.INFORMATION_MESSAGE);
-//                        }
-//                        JOptionPane.showMessageDialog(this, "Brand added", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//
-//                }
-//            }
-//        } else if (bf == null && b != null) {
-//
-//            String brand_name = Brand_name.getText();
-//            String pic_path = jtextfield2.getText();
-//
-//            if (brand_name.isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Empty name field", "Error", JOptionPane.ERROR_MESSAGE);
-//            } else if (pic_path.equals("No file selected")) {
-//                JOptionPane.showMessageDialog(this, "No image Selected", "Error", JOptionPane.ERROR_MESSAGE);
-//
-//            } else {
-//                try {
-//                    ResultSet resultSet = MySQL.execute("SELECT * FROM `brand` WHERE `name`='" + brand_name + "'");
-//                    if (resultSet.next()) {
-//                        JOptionPane.showMessageDialog(this, "Brand Already Exist", "Warning", JOptionPane.WARNING_MESSAGE);
-//
-//                    } else {
-//                        save_InsertImage(brand_name);
-//                        reset();
-//                        try {
-//                            b.reload();
-//                        } catch (Exception e) {
-//                            JOptionPane.showMessageDialog(this, e.getMessage(), "Exception", JOptionPane.INFORMATION_MESSAGE);
-//                        }
-//                        JOptionPane.showMessageDialog(this, "Brand added", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//
-//                }
-//            }
-//        }
+        String brand_name = Brand_name.getText();
+        String pic_path = jtextfield2.getText();
+
+        if (brand_name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty name field", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (pic_path.equals("No file selected")) {
+            JOptionPane.showMessageDialog(this, "No image Selected", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            try {
+                ResultSet resultSet = MySQL.execute("SELECT * FROM `brand` WHERE `name`='" + brand_name + "'");
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Brand Already Exist", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+                    save_InsertImage(brand_name);
+                    reset();
+                    if (brand != null) {
+                        brand.reload();
+                    }
+                    JOptionPane.showMessageDialog(this, "Brand added", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
 
     }//GEN-LAST:event_addBtnActionPerformed
 
