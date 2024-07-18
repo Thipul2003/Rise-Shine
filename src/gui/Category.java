@@ -118,7 +118,7 @@ public class Category extends javax.swing.JPanel {
                                                     JOptionPane.showMessageDialog(ad, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                                                 } else {
-                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
+                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));//[153,220,79]
                                                 }
 
                                             } catch (Exception ev) {
@@ -186,17 +186,49 @@ public class Category extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         brandTop = new javax.swing.JPanel();
-        categorySearch = new javax.swing.JTextField();
-        searchBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
+        info = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        searchBtn = new javax.swing.JButton();
+        categorySearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         brandTop.setPreferredSize(new java.awt.Dimension(972, 150));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("Category");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setText("(0)");
+
+        addButton.setBackground(new java.awt.Color(153, 220, 79));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        addButton.setText("+");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        info.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-light-on.gif"))); // NOI18N
+        info.setText("left Click to Delete");
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
+        searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 5, 40, 40));
 
         categorySearch.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         categorySearch.setForeground(new java.awt.Color(153, 153, 153));
@@ -222,29 +254,7 @@ public class Category extends javax.swing.JPanel {
                 categorySearchKeyReleased(evt);
             }
         });
-
-        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
-        searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        searchBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Category");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("(0)");
-
-        addButton.setBackground(new java.awt.Color(119, 82, 254));
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        addButton.setText("+");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
+        jPanel2.add(categorySearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 50));
 
         javax.swing.GroupLayout brandTopLayout = new javax.swing.GroupLayout(brandTop);
         brandTop.setLayout(brandTopLayout);
@@ -258,14 +268,17 @@ public class Category extends javax.swing.JPanel {
                     .addGroup(brandTopLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(7, 7, 7)
                 .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(brandTopLayout.createSequentialGroup()
-                        .addComponent(categorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3))
-                .addContainerGap(161, Short.MAX_VALUE))
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(brandTopLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 470, Short.MAX_VALUE)
+                        .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
         );
         brandTopLayout.setVerticalGroup(
             brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,13 +287,17 @@ public class Category extends javax.swing.JPanel {
                 .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addGap(26, 26, 26)
                 .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(categorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(brandTopLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addGroup(brandTopLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, brandTopLayout.createSequentialGroup()
+                                .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12))))))
         );
 
         add(brandTop, java.awt.BorderLayout.PAGE_START);
@@ -326,9 +343,11 @@ public class Category extends javax.swing.JPanel {
     private javax.swing.JPanel brandTop;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField categorySearch;
+    public static javax.swing.JLabel info;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables

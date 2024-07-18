@@ -12,21 +12,28 @@ import java.io.File;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Brands extends javax.swing.JPanel {
 
     private AdminDashboard ad;
 
+    public JPanel getBrandsSection() {
+        return brandsSection;
+    }
+
     public Brands() {
         initComponents();
         loadBrand();
         getbrandCount();
+
     }
 
     public void reload() {
         loadBrand();
         getbrandCount();
-        jPanel1.repaint();
+        brandsSection.repaint();
+
     }
 
     private void getbrandCount() {
@@ -70,7 +77,7 @@ public class Brands extends javax.swing.JPanel {
     }
 
     private void loadBrand() {
-        jPanel1.removeAll();
+        brandsSection.removeAll();
 
         String brand_search = brandSearch.getText();
 
@@ -168,9 +175,9 @@ public class Brands extends javax.swing.JPanel {
                             }
                         }
                         );
-                jPanel1.add(t);
-                jPanel1.revalidate();
-                jPanel1.repaint();
+                brandsSection.add(t);
+                brandsSection.revalidate();
+                brandsSection.repaint();
             }
 
         } catch (Exception e) {
@@ -185,17 +192,46 @@ public class Brands extends javax.swing.JPanel {
     private void initComponents() {
 
         brandTop = new javax.swing.JPanel();
-        brandSearch = new javax.swing.JTextField();
-        searchBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        searchBtn = new javax.swing.JButton();
+        brandSearch = new javax.swing.JTextField();
+        info = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        panel3 = new javax.swing.JPanel();
+        brandsSection = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         brandTop.setPreferredSize(new java.awt.Dimension(972, 150));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("Brands");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setText("(0)");
+
+        addButton.setBackground(new java.awt.Color(119, 82, 254));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        addButton.setText("+");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
+        searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 5, 40, 40));
 
         brandSearch.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         brandSearch.setForeground(new java.awt.Color(153, 153, 153));
@@ -221,29 +257,11 @@ public class Brands extends javax.swing.JPanel {
                 brandSearchKeyReleased(evt);
             }
         });
+        jPanel1.add(brandSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 422, 50));
 
-        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
-        searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        searchBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Brands");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("(0)");
-
-        addButton.setBackground(new java.awt.Color(119, 82, 254));
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        addButton.setText("+");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
+        info.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-light-on.gif"))); // NOI18N
+        info.setText("Left Click to Delete");
 
         javax.swing.GroupLayout brandTopLayout = new javax.swing.GroupLayout(brandTop);
         brandTop.setLayout(brandTopLayout);
@@ -252,16 +270,18 @@ public class Brands extends javax.swing.JPanel {
             .addGroup(brandTopLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(brandTopLayout.createSequentialGroup()
-                        .addComponent(brandSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3))
-                .addContainerGap(364, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(brandTopLayout.createSequentialGroup()
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                        .addGap(278, 278, 278)
+                        .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))))
         );
         brandTopLayout.setVerticalGroup(
             brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,23 +290,31 @@ public class Brands extends javax.swing.JPanel {
                 .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addGap(26, 26, 26)
-                .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(brandSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(searchBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(brandTopLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(brandTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(32, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, brandTopLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42))))
         );
 
         add(brandTop, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel1.setMinimumSize(new java.awt.Dimension(50, 249));
-        jPanel1.setLayout(new java.awt.GridLayout(0, 7, 20, 20));
-        jScrollPane2.setViewportView(jPanel1);
+        panel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        panel3.setMinimumSize(new java.awt.Dimension(50, 249));
+        panel3.setLayout(new java.awt.BorderLayout());
+
+        brandsSection.setLayout(new java.awt.GridLayout(0, 7, 18, 18));
+        panel3.add(brandsSection, java.awt.BorderLayout.CENTER);
+
+        jScrollPane2.setViewportView(panel3);
 
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -329,10 +357,13 @@ public class Brands extends javax.swing.JPanel {
     private javax.swing.JButton addButton;
     private javax.swing.JTextField brandSearch;
     private javax.swing.JPanel brandTop;
+    public javax.swing.JPanel brandsSection;
+    public static javax.swing.JLabel info;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel panel3;
     private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables
 }

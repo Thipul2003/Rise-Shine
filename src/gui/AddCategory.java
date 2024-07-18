@@ -106,6 +106,7 @@ public class AddCategory extends javax.swing.JDialog {
 
         jtextfield2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jtextfield2.setText("No file selected");
+        jtextfield2.setEnabled(false);
         jtextfield2.setMargin(new java.awt.Insets(2, 15, 2, 40));
         jtextfield2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

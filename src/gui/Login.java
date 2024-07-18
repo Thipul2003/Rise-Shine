@@ -188,16 +188,19 @@ public class Login extends javax.swing.JFrame {
         }
         if (isvalidated) {
             try {
-                ResultSet resultSet = MySQL.execute("SELECT * FROM employee WHERE `email`='" + email + "' AND `password`='" + password + "'");
-                
-                if(resultSet.next()){
+                ResultSet resultSet = MySQL.execute("SELECT * FROM employee INNER JOIN `employee_type` ON (`employee_type`.`id`=`employee`.`employee_type_id`) WHERE `email`='" + email + "' AND `password`='" + password + "'");
+
+                if (resultSet.next()) {
                     String employee_email = resultSet.getString("email");
-                    
-                    AdminDashboard db = new AdminDashboard(employee_email);
+                    String f_name = resultSet.getString("first_name");
+                    String l_name = resultSet.getString("last_name");
+                    String role = resultSet.getString("name");
+
+                    AdminDashboard db = new AdminDashboard(employee_email, f_name + " " + l_name,role);
                     db.setVisible(true);
                     this.dispose();
-                    
-                }else{
+
+                } else {
                     JOptionPane.showMessageDialog(this, "Invalid Email or Password", "Invalid", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception e) {
