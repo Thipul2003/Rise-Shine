@@ -198,10 +198,13 @@ public class Category extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        brandTop.setBackground(new java.awt.Color(255, 255, 255));
         brandTop.setPreferredSize(new java.awt.Dimension(972, 150));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-category-25.png"))); // NOI18N
         jLabel2.setText("Category");
+        jLabel2.setIconTextGap(10);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("(0)");
@@ -219,6 +222,7 @@ public class Category extends javax.swing.JPanel {
         info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-light-on.gif"))); // NOI18N
         info.setText("left Click to Delete");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
@@ -230,6 +234,7 @@ public class Category extends javax.swing.JPanel {
         });
         jPanel2.add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 5, 40, 40));
 
+        categorySearch.setBackground(new java.awt.Color(240, 240, 240));
         categorySearch.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         categorySearch.setForeground(new java.awt.Color(153, 153, 153));
         categorySearch.setText("Search by name");
@@ -276,7 +281,7 @@ public class Category extends javax.swing.JPanel {
                     .addGroup(brandTopLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 470, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 435, Short.MAX_VALUE)
                         .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))))
         );

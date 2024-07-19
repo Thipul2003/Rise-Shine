@@ -160,13 +160,13 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manager Dashboard");
+        setPreferredSize(new java.awt.Dimension(1000, 883));
         addWindowStateListener(new java.awt.event.WindowStateListener() {
             public void windowStateChanged(java.awt.event.WindowEvent evt) {
                 formWindowStateChanged(evt);
             }
         });
 
-        leftPanel.setBackground(new java.awt.Color(255, 255, 255));
         leftPanel.setPreferredSize(new java.awt.Dimension(300, 813));
         leftPanel.setLayout(new java.awt.BorderLayout());
 
@@ -388,7 +388,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         companyBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         companyBtn.setIconTextGap(34);
         companyBtn.setMargin(new java.awt.Insets(2, 80, 2, 14));
-        companyBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-supplier-25 (1).png"))); // NOI18N
+        companyBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-company-25 (1).png"))); // NOI18N
         companyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 companyBtnActionPerformed(evt);
@@ -644,7 +644,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         getContentPane().add(leftPanel, java.awt.BorderLayout.LINE_START);
 
-        topBar.setBackground(new java.awt.Color(255, 255, 255));
         topBar.setPreferredSize(new java.awt.Dimension(968, 70));
         topBar.setLayout(new java.awt.BorderLayout());
 
@@ -655,7 +654,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         timeLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        timeLabel.setText("Time :1:009 AM");
+        timeLabel.setText("TODAY :1:009 AM");
         TimePanel.add(timeLabel, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout leftTopBarLayout = new javax.swing.GroupLayout(leftTopBar);
@@ -778,7 +777,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(rightTopBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(notiyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(rightTopBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
@@ -788,6 +787,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         topBar.add(rightTopBar, java.awt.BorderLayout.LINE_END);
 
         centerTopBar.setBackground(new java.awt.Color(255, 255, 255));
+        centerTopBar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         centerTopBar.setPreferredSize(new java.awt.Dimension(500, 50));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -811,17 +811,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         centerTopBarLayout.setVerticalGroup(
             centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(centerTopBarLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel27))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         topBar.add(centerTopBar, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(topBar, java.awt.BorderLayout.PAGE_START);
 
+        rightPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 1, 1));
         rightPanel.setLayout(new java.awt.BorderLayout());
         getContentPane().add(rightPanel, java.awt.BorderLayout.CENTER);
 

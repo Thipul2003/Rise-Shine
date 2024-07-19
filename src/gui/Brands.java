@@ -205,10 +205,13 @@ public class Brands extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        brandTop.setBackground(new java.awt.Color(255, 255, 255));
         brandTop.setPreferredSize(new java.awt.Dimension(972, 150));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-tag-25.png"))); // NOI18N
         jLabel2.setText("Brands");
+        jLabel2.setIconTextGap(10);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("(0)");
@@ -222,10 +225,12 @@ public class Brands extends javax.swing.JPanel {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
         searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchBtn.setOpaque(false);
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBtnActionPerformed(evt);
@@ -233,6 +238,7 @@ public class Brands extends javax.swing.JPanel {
         });
         jPanel1.add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 5, 40, 40));
 
+        brandSearch.setBackground(new java.awt.Color(240, 240, 240));
         brandSearch.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         brandSearch.setForeground(new java.awt.Color(153, 153, 153));
         brandSearch.setText("Search by name");
