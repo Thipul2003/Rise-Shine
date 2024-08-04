@@ -82,13 +82,10 @@ public class Company extends javax.swing.JPanel {
         company_name = companyName.getText();
         contact = companyContact.getText();
         String numderRegex = "0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))[0-9]{7}";
-        String specialCharacterRegex = ".*[^a-zA-Z' '].*";
+//        String specialCharacterRegex = ".*[^a-zA-Z''].*";
 
         if (company_name.isEmpty()) {
             JOptionPane.showMessageDialog(ad, "Company Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
-
-        } else if (company_name.matches(specialCharacterRegex)) {
-            JOptionPane.showMessageDialog(ad, "Invalid Company Name", "Invalid", JOptionPane.WARNING_MESSAGE);
 
         } else if (contact.isEmpty()) {
             JOptionPane.showMessageDialog(ad, "Contact Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
@@ -112,7 +109,7 @@ public class Company extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(ad, "Company Already Exist", "Invalid", JOptionPane.WARNING_MESSAGE);
 
                 } else {
-                    MySQL.execute("INSERT INTO `company`(`name`,`contact`) VALUES('" + company_name + "','" + contact + "')");
+                    MySQL.execute("INSERT INTO `company`(`name`,`contact`,`status_id`) VALUES('" + company_name + "','" + contact + "','1')");
                     JOptionPane.showMessageDialog(ad, "Company Registered", "Success", JOptionPane.INFORMATION_MESSAGE);
                     reset();
                 }
@@ -126,16 +123,30 @@ public class Company extends javax.swing.JPanel {
         validation();
         if (isValidated) {
             try {
-                ResultSet resultSet = MySQL.execute("SELECT * FROM `company` WHERE `contact`='" + contact + "'");
+                MySQL.execute("UPDATE `company` SET `contact`='" + contact + "' WHERE `name`='" + company_name + "'");
+                JOptionPane.showMessageDialog(ad, "Company Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                reset();
 
-                if (resultSet.next()) {
-                    JOptionPane.showMessageDialog(ad, "Company Already Exist", "Invalid", JOptionPane.WARNING_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    private void changeStatus() {
+        validation();
+        if (isValidated) {
+            try {
+                if (deleteBtn.getText().equals("Deactive")) {
+                    MySQL.execute("UPDATE `company` SET `status_id`='2' WHERE `name`='" + company_name + "'");
+                    JOptionPane.showMessageDialog(ad, "Company Deactivated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    reset();
                 } else {
-                    MySQL.execute("UPDATE `company` SET `contact`='" + contact + "' WHERE `name`='" + company_name + "'");
-                    JOptionPane.showMessageDialog(ad, "Company Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    MySQL.execute("UPDATE `company` SET `status_id`='1' WHERE `name`='" + company_name + "'");
+                    JOptionPane.showMessageDialog(ad, "Company Activated", "Success", JOptionPane.INFORMATION_MESSAGE);
                     reset();
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -265,6 +276,7 @@ public class Company extends javax.swing.JPanel {
         deleteBtn.setBackground(new java.awt.Color(51, 255, 255));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(119, 82, 254));
+        deleteBtn.setText("Deactive");
         deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.setEnabled(false);
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -478,7 +490,7 @@ public class Company extends javax.swing.JPanel {
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
+        changeStatus();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void companySearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companySearchKeyPressed
