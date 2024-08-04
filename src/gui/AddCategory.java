@@ -1,6 +1,6 @@
 package gui;
 
-import Model.MySQL;
+import model.MySQL;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;

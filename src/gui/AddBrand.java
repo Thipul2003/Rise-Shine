@@ -1,7 +1,8 @@
 package gui;
 
-import Model.MySQL;
-import java.awt.Image;
+import model.MySQL;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

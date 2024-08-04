@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import gui.Brands;

@@ -1,6 +1,6 @@
 package gui;
 
-import Model.MySQL;
+import model.MySQL;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.sql.ResultSet;

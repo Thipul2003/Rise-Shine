@@ -1,7 +1,7 @@
 package gui;
 
-import Model.MySQL;
-import Model.brandPanel;
+import model.MySQL;
+import model.brandPanel;
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
 import java.awt.Image;

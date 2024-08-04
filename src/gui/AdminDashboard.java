@@ -776,11 +776,9 @@ public class AdminDashboard extends javax.swing.JFrame {
             rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(notiyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(rightTopBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+                .addGroup(rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(notiyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1205,7 +1203,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         UIManager.put("TextComponent.arc", 999);
         UIManager.put("Component.focusWidth", 0);
         UIManager.put("ScrollBar.thumbArc", 999);
-        UIManager.put("ScrollBar.width", 8);
+        UIManager.put("ScrollBar.width", 7);
         UIManager.put("ScrollBar.borderWidth", 0);
         UIManager.put("ScrollBar.hoverThumbColor", new Color(153, 51, 255));//[153,51,255]
         UIManager.put("[style]Panel.myRoundPanel",

@@ -1,20 +1,160 @@
 package gui;
 
+import model.MySQL;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
-import javax.swing.UIManager;
+import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Company extends javax.swing.JPanel {
 
+    private boolean isValidated = false;
+    private String company_name;
+    private String contact;
+    private AdminDashboard ad;
+
     public Company() {
         initComponents();
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(119, 82, 254));
-        jTable1.getTableHeader().setForeground(Color.WHITE);
-        registerPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 8");
-        viewPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 8");
+//        showGridLines();
+//        setTableAction();
+        registerPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 12");
+        viewPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 12");
+        loadCompany();
+    }
+
+    private void showGridLines() {
+        jTable2.setShowHorizontalLines(true);
+        jTable2.setShowVerticalLines(true);
+        jTable2.setGridColor(new Color(119, 82, 254));//[119,82,254]
+        jTable2.getTableHeader().setOpaque(false);
+        jTable2.getTableHeader().setBackground(new Color(119, 82, 254));
+        jTable2.getTableHeader().setForeground(Color.WHITE);
+    }
+
+    private void reset() {
+        companyName.setText("");
+        companyContact.setText("");
+        deleteBtn.setEnabled(false);
+        updateBtn.setEnabled(false);
+        saveBtn.setEnabled(true);
+        jTable2.removeAll();
+        jTable2.clearSelection();
+        isValidated = false;
+    }
+
+    private void loadCompany() {
+        jTable2.removeAll();
+        String company_search = companySearch.getText();
+        String query = "SELECT * FROM `company` ";
+        try {
+            if (company_search.equals("Search company") || company_search.isEmpty()) {
+                query += "";
+            } else {
+                query += "WHERE `name` LIKE '" + company_search + "%'";
+            }
+
+            ResultSet resultSet = MySQL.execute(query);
+
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add("COM-" + resultSet.getString("id"));
+                vector.add(resultSet.getString("name"));
+                vector.add(resultSet.getString("contact"));
+                model.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validation() {
+        company_name = companyName.getText();
+        contact = companyContact.getText();
+        String numderRegex = "0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))[0-9]{7}";
+        String specialCharacterRegex = ".*[^a-zA-Z].*";
+
+        if (company_name.isEmpty()) {
+            JOptionPane.showMessageDialog(ad, "Company Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else if (company_name.matches(specialCharacterRegex)) {
+            JOptionPane.showMessageDialog(ad, "Invalid Company Name", "Invalid", JOptionPane.WARNING_MESSAGE);
+
+        } else if (contact.isEmpty()) {
+            JOptionPane.showMessageDialog(ad, "Contact Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else if (!contact.matches(numderRegex)) {
+            JOptionPane.showMessageDialog(ad, "Invalid Contact No", "Invalid", JOptionPane.WARNING_MESSAGE);
+
+        } else {
+            isValidated = true;
+        }
 
     }
+
+    private void saveCompany() {
+        validation();
+        if (isValidated) {
+            try {
+                ResultSet resultSet = MySQL.execute("SELECT * FROM `company` WHERE `name`='" + company_name + "' OR `contact`='" + contact + "'");
+
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(ad, "Company Already Exist", "Invalid", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+                    MySQL.execute("INSERT INTO `company`(`name`,`contact`) VALUES('" + company_name + "','" + contact + "')");
+                    reset();
+                    JOptionPane.showMessageDialog(ad, "Company Registered", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void getTableSelection(MouseEvent evt) {
+        if (evt.getButton() == 1 && evt.getClickCount() == 1) {
+            int row = jTable2.getSelectedRow();
+            updateBtn.setEnabled(true);
+            deleteBtn.setEnabled(true);
+            saveBtn.setEnabled(false);
+            companyName.setText(String.valueOf(jTable2.getValueAt(row, 1)));
+            companyContact.setText(String.valueOf(jTable2.getValueAt(row, 2)));
+        }
+    }
+//    private void setTableAction() {
+//        TableActionEvent event = new TableActionEvent() {
+//            @Override
+//            public void onEdit(int row) {
+//                System.out.println(row);
+//            }
+//
+//            @Override
+//            public void onView(int row) {
+//                System.out.println(row);
+//            }
+//            
+//
+//        };
+//
+//        jTable1.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+//        jTable1.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(event));
+//
+//    }
+//    private int loadSelectedName(int row) {
+//
+//        String dep_name = String.valueOf(jTable1.getValueAt(row, 1));
+//        System.out.println("ggi");
+//        return row;
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -22,8 +162,8 @@ public class Company extends javax.swing.JPanel {
 
         registerPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        companyName = new javax.swing.JTextField();
+        companyContact = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -40,41 +180,57 @@ public class Company extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         viewCompanyPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable2 = new javax.swing.JTable();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         setLayout(new java.awt.BorderLayout());
 
         registerPanel.setBackground(new java.awt.Color(255, 255, 255));
         registerPanel.setPreferredSize(new java.awt.Dimension(400, 637));
-        registerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        registerPanel.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Company Registration");
-        registerPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(79, 25, -1, 45));
+        registerPanel.add(jLabel1);
+        jLabel1.setBounds(79, 25, 165, 45);
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jTextField1.setMargin(new java.awt.Insets(2, 20, 2, 20));
-        registerPanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 135, 367, 44));
+        companyName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        companyName.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        companyName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                companyNameKeyPressed(evt);
+            }
+        });
+        registerPanel.add(companyName);
+        companyName.setBounds(21, 135, 367, 44);
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jTextField2.setMargin(new java.awt.Insets(2, 20, 2, 20));
-        registerPanel.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 232, 367, 47));
+        companyContact.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        companyContact.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        companyContact.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                companyContactKeyPressed(evt);
+            }
+        });
+        registerPanel.add(companyContact);
+        companyContact.setBounds(21, 232, 367, 47);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Company Name:");
-        registerPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 103, -1, -1));
+        registerPanel.add(jLabel3);
+        jLabel3.setBounds(21, 103, 115, 17);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Company Contact No:");
-        registerPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 197, -1, -1));
+        registerPanel.add(jLabel4);
+        jLabel4.setBounds(21, 197, 154, 17);
 
         jButton3.setBackground(new java.awt.Color(119, 82, 254));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-company-25 (1).png"))); // NOI18N
-        registerPanel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 25, 49, 45));
+        registerPanel.add(jButton3);
+        jButton3.setBounds(25, 25, 49, 45);
 
         deleteBtn.setBackground(new java.awt.Color(51, 255, 255));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -87,7 +243,8 @@ public class Company extends javax.swing.JPanel {
                 deleteBtnActionPerformed(evt);
             }
         });
-        registerPanel.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 180, 51));
+        registerPanel.add(deleteBtn);
+        deleteBtn.setBounds(210, 390, 180, 51);
 
         saveBtn.setBackground(new java.awt.Color(51, 255, 255));
         saveBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -107,7 +264,8 @@ public class Company extends javax.swing.JPanel {
                 saveBtnActionPerformed(evt);
             }
         });
-        registerPanel.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 323, 367, 51));
+        registerPanel.add(saveBtn);
+        saveBtn.setBounds(21, 323, 367, 51);
 
         updateBtn.setBackground(new java.awt.Color(51, 255, 255));
         updateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -120,14 +278,16 @@ public class Company extends javax.swing.JPanel {
                 updateBtnActionPerformed(evt);
             }
         });
-        registerPanel.add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 180, 51));
+        registerPanel.add(updateBtn);
+        updateBtn.setBounds(20, 390, 180, 51);
 
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("then UPDATE or DELETE");
         jLabel5.setIconTextGap(20);
-        registerPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 370, 30));
+        registerPanel.add(jLabel5);
+        jLabel5.setBounds(0, 540, 370, 30);
 
         jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(153, 153, 153));
@@ -135,7 +295,8 @@ public class Company extends javax.swing.JPanel {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-light-on.gif"))); // NOI18N
         jLabel7.setText("Click Save Company Button to SAVE");
         jLabel7.setIconTextGap(20);
-        registerPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 380, 30));
+        registerPanel.add(jLabel7);
+        jLabel7.setBounds(10, 480, 380, 30);
 
         jLabel6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 153, 153));
@@ -143,7 +304,8 @@ public class Company extends javax.swing.JPanel {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-light-on.gif"))); // NOI18N
         jLabel6.setText("Double-Click to select a Company,");
         jLabel6.setIconTextGap(20);
-        registerPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 370, 30));
+        registerPanel.add(jLabel6);
+        jLabel6.setBounds(10, 520, 370, 30);
 
         add(registerPanel, java.awt.BorderLayout.LINE_START);
 
@@ -168,6 +330,11 @@ public class Company extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 companySearchFocusLost(evt);
+            }
+        });
+        companySearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                companySearchKeyPressed(evt);
             }
         });
 
@@ -207,28 +374,36 @@ public class Company extends javax.swing.JPanel {
         viewCompanyPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
         viewCompanyPanel.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable2.setAutoCreateRowSorter(true);
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "id", "Company Name", "Contact Number"
+                "id", "Company Name", "Contact Number", "#"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        jTable2.setRowHeight(40);
+        jTable2.setSelectionBackground(new java.awt.Color(119, 82, 254));
+        jTable2.getTableHeader().setResizingAllowed(false);
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(3).setHeaderValue("#");
+        }
 
         viewCompanyPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -250,12 +425,12 @@ public class Company extends javax.swing.JPanel {
     }//GEN-LAST:event_saveBtnMousePressed
 
     private void saveBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseReleased
-        saveBtn.setBackground(new Color(51,255,255));
+        saveBtn.setBackground(new Color(51, 255, 255));
 
     }//GEN-LAST:event_saveBtnMouseReleased
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        // TODO add your handling code here:
+        saveCompany();
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
@@ -266,8 +441,26 @@ public class Company extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteBtnActionPerformed
 
+    private void companySearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companySearchKeyPressed
+        loadCompany();
+    }//GEN-LAST:event_companySearchKeyPressed
+
+    private void companyNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companyNameKeyPressed
+
+    }//GEN-LAST:event_companyNameKeyPressed
+
+    private void companyContactKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companyContactKeyPressed
+
+    }//GEN-LAST:event_companyContactKeyPressed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        getTableSelection(evt);
+    }//GEN-LAST:event_jTable2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField companyContact;
+    private javax.swing.JTextField companyName;
     private javax.swing.JTextField companySearch;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton jButton2;
@@ -280,9 +473,7 @@ public class Company extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTable2;
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton saveBtn;
     private javax.swing.JPanel topCompanyBar;

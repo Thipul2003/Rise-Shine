@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ public class MySQL {
     public static ResultSet execute(String query) throws Exception {
         Statement statement = connection.createStatement();
 
-        if (query.startsWith("SELECT") | query.startsWith("select")) {
+        if (query.startsWith("SELECT") || query.startsWith("select")) {
 
             ResultSet resultSet = statement.executeQuery(query);
             return resultSet;
