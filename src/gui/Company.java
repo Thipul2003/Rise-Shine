@@ -42,7 +42,7 @@ public class Company extends javax.swing.JPanel {
         deleteBtn.setEnabled(false);
         updateBtn.setEnabled(false);
         saveBtn.setEnabled(true);
-        companyName.setEnabled(true);
+        companyName.setEditable(true);
         jTable2.removeAll();
         loadCompany();
         jTable2.clearSelection();
@@ -56,7 +56,7 @@ public class Company extends javax.swing.JPanel {
             if (company_search.equals("Search company") || company_search.isEmpty()) {
                 query += "";
             } else {
-                query += "WHERE `name` LIKE '" + company_search + "%'";
+                query += "WHERE `company`.`name` LIKE '" + company_search + "%'";
             }
 
             ResultSet resultSet = MySQL.execute(query);
@@ -66,7 +66,7 @@ public class Company extends javax.swing.JPanel {
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
                 vector.add("COM-" + resultSet.getString("id"));
-                vector.add(resultSet.getString("name"));
+                vector.add(resultSet.getString("company.name"));
                 vector.add(resultSet.getString("contact"));
                 vector.add(resultSet.getString("status.name"));
 
@@ -161,7 +161,7 @@ public class Company extends javax.swing.JPanel {
             saveBtn.setEnabled(false);
             companyName.setText(String.valueOf(jTable2.getValueAt(row, 1)));
             companyContact.setText(String.valueOf(jTable2.getValueAt(row, 2)));
-            companyName.setEnabled(false);
+            companyName.setEditable(false);
 
             if (String.valueOf(jTable2.getValueAt(row, 3)).equals("Active")) {
                 deleteBtn.setText("Deactive");
