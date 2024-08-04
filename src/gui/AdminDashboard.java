@@ -1,6 +1,7 @@
 package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;

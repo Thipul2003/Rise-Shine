@@ -7,9 +7,8 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import model.NoBorderTableCellRenderer;
 
 public class Company extends javax.swing.JPanel {
 
@@ -20,7 +19,8 @@ public class Company extends javax.swing.JPanel {
 
     public Company() {
         initComponents();
-//        showGridLines();
+        jTable2.setDefaultRenderer(Object.class, new NoBorderTableCellRenderer());
+        showGridLines();
 //        setTableAction();
         registerPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 12");
         viewPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 12");
@@ -30,10 +30,10 @@ public class Company extends javax.swing.JPanel {
     private void showGridLines() {
         jTable2.setShowHorizontalLines(true);
         jTable2.setShowVerticalLines(true);
-        jTable2.setGridColor(new Color(119, 82, 254));//[119,82,254]
         jTable2.getTableHeader().setOpaque(false);
         jTable2.getTableHeader().setBackground(new Color(119, 82, 254));
         jTable2.getTableHeader().setForeground(Color.WHITE);
+
     }
 
     private void reset() {
@@ -42,15 +42,16 @@ public class Company extends javax.swing.JPanel {
         deleteBtn.setEnabled(false);
         updateBtn.setEnabled(false);
         saveBtn.setEnabled(true);
+        companyName.setEnabled(true);
         jTable2.removeAll();
+        loadCompany();
         jTable2.clearSelection();
         isValidated = false;
     }
 
     private void loadCompany() {
-        jTable2.removeAll();
         String company_search = companySearch.getText();
-        String query = "SELECT * FROM `company` ";
+        String query = "SELECT * FROM `company` INNER JOIN status ON (status.id=company.status_id) ";
         try {
             if (company_search.equals("Search company") || company_search.isEmpty()) {
                 query += "";
@@ -67,6 +68,8 @@ public class Company extends javax.swing.JPanel {
                 vector.add("COM-" + resultSet.getString("id"));
                 vector.add(resultSet.getString("name"));
                 vector.add(resultSet.getString("contact"));
+                vector.add(resultSet.getString("status.name"));
+
                 model.addRow(vector);
 
             }
@@ -79,7 +82,7 @@ public class Company extends javax.swing.JPanel {
         company_name = companyName.getText();
         contact = companyContact.getText();
         String numderRegex = "0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))[0-9]{7}";
-        String specialCharacterRegex = ".*[^a-zA-Z].*";
+        String specialCharacterRegex = ".*[^a-zA-Z' '].*";
 
         if (company_name.isEmpty()) {
             JOptionPane.showMessageDialog(ad, "Company Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
@@ -110,9 +113,28 @@ public class Company extends javax.swing.JPanel {
 
                 } else {
                     MySQL.execute("INSERT INTO `company`(`name`,`contact`) VALUES('" + company_name + "','" + contact + "')");
-                    reset();
                     JOptionPane.showMessageDialog(ad, "Company Registered", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    reset();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    private void updateCompany() {
+        validation();
+        if (isValidated) {
+            try {
+                ResultSet resultSet = MySQL.execute("SELECT * FROM `company` WHERE `contact`='" + contact + "'");
+
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(ad, "Company Already Exist", "Invalid", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+                    MySQL.execute("UPDATE `company` SET `contact`='" + contact + "' WHERE `name`='" + company_name + "'");
+                    JOptionPane.showMessageDialog(ad, "Company Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    reset();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -128,6 +150,13 @@ public class Company extends javax.swing.JPanel {
             saveBtn.setEnabled(false);
             companyName.setText(String.valueOf(jTable2.getValueAt(row, 1)));
             companyContact.setText(String.valueOf(jTable2.getValueAt(row, 2)));
+            companyName.setEnabled(false);
+
+            if (String.valueOf(jTable2.getValueAt(row, 3)).equals("Active")) {
+                deleteBtn.setText("Deactive");
+            } else {
+                deleteBtn.setText("Active");
+            }
         }
     }
 //    private void setTableAction() {
@@ -178,6 +207,7 @@ public class Company extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         companySearch = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         viewCompanyPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -235,7 +265,6 @@ public class Company extends javax.swing.JPanel {
         deleteBtn.setBackground(new java.awt.Color(51, 255, 255));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(119, 82, 254));
-        deleteBtn.setText("Delete");
         deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.setEnabled(false);
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -341,19 +370,29 @@ public class Company extends javax.swing.JPanel {
         jButton2.setBackground(new java.awt.Color(119, 82, 254));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-company-25 (1).png"))); // NOI18N
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-refresh-30.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout topCompanyBarLayout = new javax.swing.GroupLayout(topCompanyBar);
         topCompanyBar.setLayout(topCompanyBarLayout);
         topCompanyBarLayout.setHorizontalGroup(
             topCompanyBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topCompanyBarLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addContainerGap(403, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topCompanyBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(companySearch)
+                .addGroup(topCompanyBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(topCompanyBarLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topCompanyBarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(companySearch)))
                 .addContainerGap())
         );
         topCompanyBarLayout.setVerticalGroup(
@@ -362,10 +401,11 @@ public class Company extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addGroup(topCompanyBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(companySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         viewPanel.add(topCompanyBar, java.awt.BorderLayout.PAGE_START);
@@ -391,8 +431,11 @@ public class Company extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTable2.setRowHeight(40);
         jTable2.setSelectionBackground(new java.awt.Color(119, 82, 254));
+        jTable2.setShowHorizontalLines(false);
+        jTable2.setShowVerticalLines(false);
         jTable2.getTableHeader().setResizingAllowed(false);
         jTable2.getTableHeader().setReorderingAllowed(false);
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -401,9 +444,6 @@ public class Company extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(3).setHeaderValue("#");
-        }
 
         viewCompanyPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -434,7 +474,7 @@ public class Company extends javax.swing.JPanel {
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-        // TODO add your handling code here:
+        updateCompany();
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -457,6 +497,10 @@ public class Company extends javax.swing.JPanel {
         getTableSelection(evt);
     }//GEN-LAST:event_jTable2MouseClicked
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        reset();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField companyContact;
@@ -465,6 +509,7 @@ public class Company extends javax.swing.JPanel {
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
