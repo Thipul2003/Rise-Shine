@@ -1121,9 +1121,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         returns();
-        Profile profile = new Profile(this.email);
-        rightPanel.removeAll();
-        rightPanel.add(profile, BorderLayout.CENTER);
+        try {
+            Profile profile = new Profile(this.email);
+            rightPanel.removeAll();
+            rightPanel.add(profile, BorderLayout.CENTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         rightPanel.revalidate();
         rightPanel.repaint();
     }//GEN-LAST:event_profileBtnActionPerformed
@@ -1196,9 +1201,13 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         returns();
-        Profile profile = new Profile(this.email);
-        rightPanel.removeAll();
-        rightPanel.add(profile, BorderLayout.CENTER);
+        try {
+            Profile profile = new Profile(this.email);
+            rightPanel.removeAll();
+            rightPanel.add(profile, BorderLayout.CENTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         rightPanel.revalidate();
         rightPanel.repaint();
         profileBtn.setSelected(true);

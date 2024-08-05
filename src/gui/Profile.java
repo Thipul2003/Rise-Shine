@@ -20,11 +20,11 @@ import javax.swing.filechooser.FileSystemView;
 import model.MySQL;
 
 public class Profile extends javax.swing.JPanel {
-    
+
     private final String email;
     private AdminDashboard ad;
-    
-    public Profile(String email) {
+
+    public Profile(String email) throws Exception {
         initComponents();
         this.email = email;
         loadProfileDetails();
@@ -32,73 +32,65 @@ public class Profile extends javax.swing.JPanel {
         loadType();
         setEditable();
         setProfileImg();
-        
+
     }
-    
-    private void setProfileImg() {
-        try {
-            ResultSet rs = MySQL.execute("SELECT * FROM `profile_img` WHERE `employee_email`='" + email + "'");
-            if (rs.next()) {
-                String path = rs.getString("path");
-                setImage(path);
-            } else {
-                File profileFolder = new File("src/Backup/profile");
-                profileFolder.mkdir();
-                setImage("src/Backup/profile/profile.jpg");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    private void setProfileImg() throws Exception {
+        ResultSet rs = MySQL.execute("SELECT * FROM `profile_img` WHERE `employee_email`='" + email + "'");
+        if (rs.next()) {
+            String path = rs.getString("path");
+            setImage(path);
+        } else {
+            File profileFolder = new File("src/Backup/profile");
+            profileFolder.mkdir();
+            setImage("src/Backup/profile/profile.jpg");
         }
     }
-    
-    private void setImage(String path) {
-        try {
-            BufferedImage master = ImageIO.read(new File(path));
-            int diameter = Math.min(master.getWidth(), master.getHeight());
-            BufferedImage mask = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            
-            Graphics2D g2d = mask.createGraphics();
-            applyQualityRenderingHints(g2d);
-            g2d.fillOval(0, 0, diameter - 1, diameter - 1);
-            g2d.dispose();
-            
-            BufferedImage masked = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
-            g2d = masked.createGraphics();
-            applyQualityRenderingHints(g2d);
-            int x = (diameter - master.getWidth()) / 2;
-            int y = (diameter - master.getHeight()) / 2;
-            g2d.drawImage(master, x, y, null);
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN));
-            g2d.drawImage(mask, 0, 0, null);
-            g2d.dispose();
-            
-            updateImage(profilePic, masked);
-            
-            this.addComponentListener(new java.awt.event.ComponentAdapter() {
-                @Override
-                public void componentShown(java.awt.event.ComponentEvent evt) {
-                    int labelWidth = profilePic.getWidth();
-                    int labelHeight = profilePic.getHeight();
-                    Image resizedImage = masked.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-                    profilePic.setIcon(new ImageIcon(resizedImage));
-                }
-                
-                @Override
-                public void componentResized(java.awt.event.ComponentEvent evt) {
-                    int labelWidth = profilePic.getWidth();
-                    int labelHeight = profilePic.getHeight();
-                    Image resizedImage = masked.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-                    profilePic.setIcon(new ImageIcon(resizedImage));
-                }
+
+    private void setImage(String path) throws Exception {
+        BufferedImage master = ImageIO.read(new File(path));
+        int diameter = Math.min(master.getWidth(), master.getHeight());
+        BufferedImage mask = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = mask.createGraphics();
+        applyQualityRenderingHints(g2d);
+        g2d.fillOval(0, 0, diameter - 1, diameter - 1);
+        g2d.dispose();
+
+        BufferedImage masked = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+        g2d = masked.createGraphics();
+        applyQualityRenderingHints(g2d);
+        int x = (diameter - master.getWidth()) / 2;
+        int y = (diameter - master.getHeight()) / 2;
+        g2d.drawImage(master, x, y, null);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN));
+        g2d.drawImage(mask, 0, 0, null);
+        g2d.dispose();
+
+        updateImage(profilePic, masked);
+
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                int labelWidth = profilePic.getWidth();
+                int labelHeight = profilePic.getHeight();
+                Image resizedImage = masked.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+                profilePic.setIcon(new ImageIcon(resizedImage));
             }
-            );
-            
-            jLabel10.setText(path);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                int labelWidth = profilePic.getWidth();
+                int labelHeight = profilePic.getHeight();
+                Image resizedImage = masked.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+                profilePic.setIcon(new ImageIcon(resizedImage));
+            }
         }
+        );
+
+        jLabel10.setText(path);
     }
-    
+
     public static void applyQualityRenderingHints(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -109,7 +101,7 @@ public class Profile extends javax.swing.JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
     }
-    
+
     private static void updateImage(JLabel label, BufferedImage image) {
         int labelWidth = label.getWidth();
         int labelHeight = label.getHeight();
@@ -118,7 +110,7 @@ public class Profile extends javax.swing.JPanel {
             label.setIcon(new ImageIcon(resizedImage));
         }
     }
-    
+
     private void setEditable() {
         f_name.setEditable(false);
         l_name.setEditable(false);
@@ -129,71 +121,60 @@ public class Profile extends javax.swing.JPanel {
         role.setEnabled(false);
         saveProfile.setEnabled(false);
         jLabel10.setVisible(false);
-        
+
     }
-    
+
     private void saveTrigger() {
         saveProfile.setEnabled(true);
     }
-    
-    private void loadGender() {
-        try {
-            ResultSet resultSet = MySQL.execute("SELECT * FROM `gender`");
-            Vector<String> vector = new Vector<>();
-            
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("name"));
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            gender.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    private void loadGender() throws Exception {
+        ResultSet resultSet = MySQL.execute("SELECT * FROM `gender`");
+        Vector<String> vector = new Vector<>();
+
+        while (resultSet.next()) {
+            vector.add(resultSet.getString("name"));
+        }
+        DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+        gender.setModel(model);
+
+    }
+
+    private void loadType() throws Exception {
+        ResultSet resultSet = MySQL.execute("SELECT * FROM `employee_type`");
+        Vector<String> vector = new Vector<>();
+
+        while (resultSet.next()) {
+            vector.add(resultSet.getString("name"));
+        }
+        DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+        role.setModel(model);
+
+    }
+
+    private void loadProfileDetails() throws Exception {
+        ResultSet rs = MySQL.execute("SELECT * FROM `employee` INNER JOIN `employee_type` ON(employee.employee_type_id=employee_type.id) "
+                + "INNER JOIN `gender` ON(employee.gender_id=gender.id) WHERE `email`='" + email + "'");
+
+        if (rs.next()) {
+            String fName = rs.getString("first_name");
+            String lName = rs.getString("first_name");
+            String type = rs.getString("employee_type.name");
+
+            f_name.setText(fName);
+            l_name.setText(lName);
+            profName.setText(fName + " " + lName);
+            profEmail.setText(email);
+            profRole.setText(type);
+            emailField.setText(email);
+            nic.setText(rs.getString("nic"));
+            mobile.setText(rs.getString("mobile"));
+            gender.setSelectedItem(rs.getString("gender.name"));
+            password.setText(rs.getString("password"));
+            role.setSelectedItem(type);
         }
     }
-    
-    private void loadType() {
-        try {
-            ResultSet resultSet = MySQL.execute("SELECT * FROM `employee_type`");
-            Vector<String> vector = new Vector<>();
-            
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("name"));
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            role.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private void loadProfileDetails() {
-        try {
-            ResultSet rs = MySQL.execute("SELECT * FROM `employee` INNER JOIN `employee_type` ON(employee.employee_type_id=employee_type.id) "
-                    + "INNER JOIN `gender` ON(employee.gender_id=gender.id) WHERE `email`='" + email + "'");
-            
-            if (rs.next()) {
-                String fName = rs.getString("first_name");
-                String lName = rs.getString("first_name");
-                String type = rs.getString("employee_type.name");
-                
-                f_name.setText(fName);
-                l_name.setText(lName);
-                profName.setText(fName + " " + lName);
-                profEmail.setText(email);
-                profRole.setText(type);
-                emailField.setText(email);
-                nic.setText(rs.getString("nic"));
-                mobile.setText(rs.getString("mobile"));
-                gender.setSelectedItem(rs.getString("gender.name"));
-                password.setText(rs.getString("password"));
-                role.setSelectedItem(type);
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
+
     public static String getFileExtension(String filename) {
         int dotIndex = filename.lastIndexOf('.');
         if (dotIndex >= 0) {
@@ -202,40 +183,32 @@ public class Profile extends javax.swing.JPanel {
             return "";
         }
     }
-    
-    private void saveImage(String path) {
-        
+
+    private void saveImage(String path) throws Exception {
+
         String ext = getFileExtension(path);
         File folder = new File("src\\Backup\\profile");
         folder.mkdir();
-        
+
         File destinationFile = new File(folder, "" + f_name.getText() + "_" + l_name.getText() + "." + ext);
         String getImage = "src\\\\Backup\\\\profile\\\\" + f_name.getText() + "_" + l_name.getText() + "." + ext;
+
+        BufferedImage image = ImageIO.read(new File(path));
+        ImageIO.write(image, ext, destinationFile);
         
-        try {
-            BufferedImage image = ImageIO.read(new File(path));
-            ImageIO.write(image, ext, destinationFile);
-            try {
-                ResultSet rs = MySQL.execute("SELECT `path` FROM `profile_img` WHERE `employee_email`='" + this.email + "'");
-                
-                if (rs.next()) {
-                    MySQL.execute("UPDATE `profile_img` SET `path`='" + getImage + "' WHERE `employee_email`='" + this.email + "'");
-                    JOptionPane.showMessageDialog(ad, "Profile Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    
-                } else {
-                    MySQL.execute("INSERT INTO `profile_img`(`employee_email`,`path`) VALUES('" + email + "','" + getImage + "')");
-                    JOptionPane.showMessageDialog(ad, "Profile Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            
+        ResultSet rs = MySQL.execute("SELECT `path` FROM `profile_img` WHERE `employee_email`='" + this.email + "'");
+
+        if (rs.next()) {
+            MySQL.execute("UPDATE `profile_img` SET `path`='" + getImage + "' WHERE `employee_email`='" + this.email + "'");
+            JOptionPane.showMessageDialog(ad, "Profile Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            MySQL.execute("INSERT INTO `profile_img`(`employee_email`,`path`) VALUES('" + email + "','" + getImage + "')");
+            JOptionPane.showMessageDialog(ad, "Profile Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -788,7 +761,7 @@ public class Profile extends javax.swing.JPanel {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             j.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "jfif", "svg"));
             int r = j.showOpenDialog(null);
-            
+
             if (r == JFileChooser.APPROVE_OPTION) {
                 String path = String.valueOf(j.getSelectedFile().getAbsolutePath().replace("\\", "/"));
                 setImage(path);
@@ -800,22 +773,22 @@ public class Profile extends javax.swing.JPanel {
     }//GEN-LAST:event_setImgActionPerformed
 
     private void saveProfileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveProfileMouseEntered
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_saveProfileMouseEntered
 
     private void saveProfileMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveProfileMouseExited
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_saveProfileMouseExited
 
     private void saveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveProfileActionPerformed
         String Password = String.valueOf(password.getPassword());
         String Mobile = mobile.getText();
         String Path = jLabel10.getText();
-        
+
         try {
             MySQL.execute("UPDATE `employee` SET `password`='" + Password + "',`mobile`='" + Mobile + "' WHERE `email`='" + this.email + "'");
             saveImage(Path);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -826,14 +799,14 @@ public class Profile extends javax.swing.JPanel {
     }//GEN-LAST:event_mobileKeyTyped
 
     private void visiblepasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visiblepasswordMouseClicked
-        
+
         notvisiblePassword.setVisible(true);
         password.setEchoChar('\u25cf');
         visiblepassword.setVisible(false);
     }//GEN-LAST:event_visiblepasswordMouseClicked
 
     private void notvisiblePasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notvisiblePasswordMouseClicked
-        
+
         visiblepassword.setVisible(true);
         password.setEchoChar('\u0000');
         notvisiblePassword.setVisible(false);
@@ -847,18 +820,18 @@ public class Profile extends javax.swing.JPanel {
     }//GEN-LAST:event_profilePicComponentShown
 
     private void profilePicComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_profilePicComponentResized
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_profilePicComponentResized
 
     private void profilePicPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_profilePicPropertyChange
     }//GEN-LAST:event_profilePicPropertyChange
 
     private void notvisiblePasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notvisiblePasswordMousePressed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_notvisiblePasswordMousePressed
 
     private void notvisiblePasswordMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notvisiblePasswordMouseReleased
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_notvisiblePasswordMouseReleased
 
 
