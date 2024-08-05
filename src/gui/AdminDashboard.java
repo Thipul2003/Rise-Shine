@@ -1,7 +1,6 @@
 package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +12,7 @@ import javax.swing.UIManager;
 
 public class AdminDashboard extends javax.swing.JFrame {
 
-    private String email;
+    private String email = "admin@gmail.com";
     private String name;
     private String role;
 
@@ -761,6 +760,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-male-user-30.png"))); // NOI18N
         jLabel5.setText("Thipul Liyanage");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout rightTopBarLayout = new javax.swing.GroupLayout(rightTopBar);
         rightTopBar.setLayout(rightTopBarLayout);
@@ -776,11 +781,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightTopBarLayout.setVerticalGroup(
             rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(notiyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(notiyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         topBar.add(rightTopBar, java.awt.BorderLayout.LINE_END);
@@ -1116,7 +1121,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         returns();
-        Profile profile = new Profile();
+        Profile profile = new Profile(this.email);
         rightPanel.removeAll();
         rightPanel.add(profile, BorderLayout.CENTER);
         rightPanel.revalidate();
@@ -1188,6 +1193,16 @@ public class AdminDashboard extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_formWindowStateChanged
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        returns();
+        Profile profile = new Profile(this.email);
+        rightPanel.removeAll();
+        rightPanel.add(profile, BorderLayout.CENTER);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+        profileBtn.setSelected(true);
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments

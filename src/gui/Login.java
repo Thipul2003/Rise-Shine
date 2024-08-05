@@ -138,21 +138,17 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusGained
-        // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldFocusGained
 
     private void emailTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_emailTextFieldInputMethodTextChanged
-        // TODO add your handling code here:
 
     }//GEN-LAST:event_emailTextFieldInputMethodTextChanged
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
-        // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton1MouseEntered
 
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
-        // TODO add your handling code here:
         //jButton1.setBackground(new Color(0, 153, 255));
 
     }//GEN-LAST:event_jButton1MouseExited
@@ -196,7 +192,7 @@ public class Login extends javax.swing.JFrame {
                     String l_name = resultSet.getString("last_name");
                     String role = resultSet.getString("name");
 
-                    AdminDashboard db = new AdminDashboard(employee_email, f_name + " " + l_name,role);
+                    AdminDashboard db = new AdminDashboard(employee_email, f_name + " " + l_name, role);
                     db.setVisible(true);
                     this.dispose();
 
@@ -224,9 +220,6 @@ public class Login extends javax.swing.JFrame {
         notvisiblePassword.setVisible(false);
     }//GEN-LAST:event_notvisiblePasswordMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         FlatMacLightLaf.setup();
         UIManager.put("ToggleButton.selectedBackground", new Color(119, 82, 254));
@@ -248,7 +241,6 @@ public class Login extends javax.swing.JFrame {
                 + "[light]border: 16,16,16,16,shade(@background,10%),,12;"
                 + "[dark]border: 16,16,16,16,tint(@background,10%),,12");
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

@@ -21,7 +21,6 @@ public class AddBrand extends javax.swing.JDialog {
     public void setBrand(Brands brand) {
         this.brand = brand;
     }
-    
 
     public AddBrand(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -74,7 +73,7 @@ public class AddBrand extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        setBrand = new javax.swing.JButton();
         Brand_name = new javax.swing.JTextField();
         jtextfield2 = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
@@ -98,14 +97,14 @@ public class AddBrand extends javax.swing.JDialog {
         jLabel2.setText("Brand Logo");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-folder.gif"))); // NOI18N
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        setBrand.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-folder.gif"))); // NOI18N
+        setBrand.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setBrand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                setBrandActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(419, 242, 50, 40));
+        jPanel1.add(setBrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(419, 242, 50, 40));
 
         Brand_name.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Brand_name.setMargin(new java.awt.Insets(2, 15, 2, 15));
@@ -171,29 +170,25 @@ public class AddBrand extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void setBrandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setBrandActionPerformed
         try {
 
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             j.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "jfif", "svg"));
-            // invoke the showsOpenDialog function to show the save dialog
             int r = j.showOpenDialog(null);
 
-            // if the user selects a file
             if (r == JFileChooser.APPROVE_OPTION) {
 
                 String path = String.valueOf(j.getSelectedFile().getAbsolutePath().replace("\\", "\\\\"));
                 jtextfield2.setText(path);
 
-                //set and scale image
                 ImageIcon image = new ImageIcon(String.valueOf(j.getSelectedFile().getAbsolutePath()));
                 Image new_img = image.getImage().getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_SMOOTH);
                 img.setIcon(new ImageIcon(new_img));
 
                 msg.setText("");
 
-            } // if the user cancelled the operation
-            else {
+            } else {
                 msg.setText("the user cancelled the operation");
             }
 
@@ -201,7 +196,7 @@ public class AddBrand extends javax.swing.JDialog {
             e.printStackTrace();
 
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_setBrandActionPerformed
 
     private void jtextfield2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtextfield2FocusGained
 
@@ -248,34 +243,7 @@ public class AddBrand extends javax.swing.JDialog {
 
     }//GEN-LAST:event_addBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddBrand.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddBrand.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddBrand.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddBrand.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AddBrand dialog = new AddBrand(new javax.swing.JFrame(), true);
@@ -294,7 +262,6 @@ public class AddBrand extends javax.swing.JDialog {
     private javax.swing.JTextField Brand_name;
     private javax.swing.JButton addBtn;
     private javax.swing.JLabel img;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -304,5 +271,6 @@ public class AddBrand extends javax.swing.JDialog {
     private javax.swing.JPanel logo_space;
     private javax.swing.JLabel msg;
     private javax.swing.JPanel pic_frame;
+    private javax.swing.JButton setBrand;
     // End of variables declaration//GEN-END:variables
 }

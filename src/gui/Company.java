@@ -170,31 +170,6 @@ public class Company extends javax.swing.JPanel {
             }
         }
     }
-//    private void setTableAction() {
-//        TableActionEvent event = new TableActionEvent() {
-//            @Override
-//            public void onEdit(int row) {
-//                System.out.println(row);
-//            }
-//
-//            @Override
-//            public void onView(int row) {
-//                System.out.println(row);
-//            }
-//            
-//
-//        };
-//
-//        jTable1.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
-//        jTable1.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(event));
-//
-//    }
-//    private int loadSelectedName(int row) {
-//
-//        String dep_name = String.valueOf(jTable1.getValueAt(row, 1));
-//        System.out.println("ggi");
-//        return row;
-//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
