@@ -1,9 +1,12 @@
 package gui;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +14,7 @@ import java.sql.ResultSet;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -23,10 +27,12 @@ public class Profile extends javax.swing.JPanel {
 
     private final String email;
     private AdminDashboard ad;
+    private boolean isValidated;
 
     public Profile(String email) throws Exception {
         initComponents();
         this.email = email;
+        this.isValidated = false;
         loadProfileDetails();
         loadGender();
         loadType();
@@ -195,18 +201,51 @@ public class Profile extends javax.swing.JPanel {
 
         BufferedImage image = ImageIO.read(new File(path));
         ImageIO.write(image, ext, destinationFile);
-        
+
         ResultSet rs = MySQL.execute("SELECT `path` FROM `profile_img` WHERE `employee_email`='" + this.email + "'");
 
         if (rs.next()) {
             MySQL.execute("UPDATE `profile_img` SET `path`='" + getImage + "' WHERE `employee_email`='" + this.email + "'");
-            JOptionPane.showMessageDialog(ad, "Profile Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane jo = new JOptionPane();
+            jo.setBackground(Color.WHITE);
+            JLabel l = new JLabel(new ImageIcon("src/img/hurray.gif"));
+            l.setText("Profile Updated");
+            l.setHorizontalTextPosition(2);
+            l.setIconTextGap(20);
+            jo.showMessageDialog(ad, l, "Success", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
             MySQL.execute("INSERT INTO `profile_img`(`employee_email`,`path`) VALUES('" + email + "','" + getImage + "')");
-            JOptionPane.showMessageDialog(ad, "Profile Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane jo = new JOptionPane();
+            jo.setBackground(Color.WHITE);
+            JLabel l = new JLabel(new ImageIcon("src/img/hurray.gif"));
+            l.setText("Profile Updated");
+            l.setHorizontalTextPosition(2);
+            l.setIconTextGap(20);
+            jo.showMessageDialog(ad, l, "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
+    }
+
+    private void validation() {
+        String p = String.valueOf(password.getPassword());
+        String m = mobile.getText();
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        if (p.isEmpty()) {
+            JOptionPane.showMessageDialog(ad, "Password Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else if (!p.matches(passwordRegex)) {
+            JOptionPane.showMessageDialog(ad, "Minimum eight characters,at least one uppercase letter one lowercase letter one number one special character", "Invalid Password", JOptionPane.WARNING_MESSAGE);
+
+        } else if (m.isEmpty()) {
+            JOptionPane.showMessageDialog(ad, "Mobile Field is Empty", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else if (!m.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(ad, "Invalid Mobile No", "Invalid", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            isValidated = true;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -784,13 +823,16 @@ public class Profile extends javax.swing.JPanel {
         String Password = String.valueOf(password.getPassword());
         String Mobile = mobile.getText();
         String Path = jLabel10.getText();
+        validation();
 
-        try {
-            MySQL.execute("UPDATE `employee` SET `password`='" + Password + "',`mobile`='" + Mobile + "' WHERE `email`='" + this.email + "'");
-            saveImage(Path);
+        if (isValidated) {
+            try {
+                MySQL.execute("UPDATE `employee` SET `password`='" + Password + "',`mobile`='" + Mobile + "' WHERE `email`='" + this.email + "'");
+                saveImage(Path);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_saveProfileActionPerformed
 

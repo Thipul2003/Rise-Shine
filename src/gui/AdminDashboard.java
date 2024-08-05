@@ -1229,6 +1229,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         UIManager.put("Component.focusWidth", 0);
         UIManager.put("ScrollBar.thumbArc", 999);
         UIManager.put("ScrollBar.width", 7);
+        UIManager. put("OptionPane.background", new Color(255, 255, 255));
         UIManager.put("ScrollBar.borderWidth", 0);
         UIManager.put("ScrollBar.hoverThumbColor", new Color(153, 51, 255));//[153,51,255]
         UIManager.put("[style]Panel.myRoundPanel",

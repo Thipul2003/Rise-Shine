@@ -166,6 +166,8 @@ public class Login extends javax.swing.JFrame {
             passwordTextField.grabFocus();
         } else if (!password.matches(passwordRegex)) {
             passwordInvalidIcon.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Minimum eight characters,at least one uppercase letter one lowercase letter one number one special character", "Invalid Password", JOptionPane.WARNING_MESSAGE);
+
         } else {
             passwordInvalidIcon.setVisible(false);
 
