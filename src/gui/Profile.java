@@ -26,23 +26,23 @@ import model.MySQL;
 public class Profile extends javax.swing.JPanel {
 
     private final String email;
+    private int id;
     private AdminDashboard ad;
     private boolean isValidated;
 
-    public Profile(String email) throws Exception {
+    public Profile(Integer id, String email) throws Exception {
         initComponents();
+        this.id = id;
         this.email = email;
         this.isValidated = false;
         loadProfileDetails();
-        loadGender();
-        loadType();
         setEditable();
         setProfileImg();
 
     }
 
     private void setProfileImg() throws Exception {
-        ResultSet rs = MySQL.execute("SELECT * FROM `profile_img` WHERE `employee_email`='" + email + "'");
+        ResultSet rs = MySQL.execute("SELECT * FROM `profile_img` WHERE `employee_id`='" + id + "'");
         if (rs.next()) {
             String path = rs.getString("path");
             setImage(path);
@@ -134,25 +134,18 @@ public class Profile extends javax.swing.JPanel {
         saveProfile.setEnabled(true);
     }
 
-    private void loadGender() throws Exception {
-        ResultSet resultSet = MySQL.execute("SELECT * FROM `gender`");
+    private void loadGender(String name) throws Exception {
         Vector<String> vector = new Vector<>();
+        vector.add(name);
 
-        while (resultSet.next()) {
-            vector.add(resultSet.getString("name"));
-        }
         DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
         gender.setModel(model);
 
     }
 
-    private void loadType() throws Exception {
-        ResultSet resultSet = MySQL.execute("SELECT * FROM `employee_type`");
+    private void loadType(String name) throws Exception {
         Vector<String> vector = new Vector<>();
-
-        while (resultSet.next()) {
-            vector.add(resultSet.getString("name"));
-        }
+        vector.add(name);
         DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
         role.setModel(model);
 
@@ -160,7 +153,7 @@ public class Profile extends javax.swing.JPanel {
 
     private void loadProfileDetails() throws Exception {
         ResultSet rs = MySQL.execute("SELECT * FROM `employee` INNER JOIN `employee_type` ON(employee.employee_type_id=employee_type.id) "
-                + "INNER JOIN `gender` ON(employee.gender_id=gender.id) WHERE `email`='" + email + "'");
+                + "INNER JOIN `gender` ON(employee.gender_id=gender.id) WHERE `employee_id`='" + id + "'");
 
         if (rs.next()) {
             String fName = rs.getString("first_name");
@@ -175,9 +168,9 @@ public class Profile extends javax.swing.JPanel {
             emailField.setText(email);
             nic.setText(rs.getString("nic"));
             mobile.setText(rs.getString("mobile"));
-            gender.setSelectedItem(rs.getString("gender.name"));
+            loadGender(rs.getString("gender.name"));
             password.setText(rs.getString("password"));
-            role.setSelectedItem(type);
+            loadType(type);
         }
     }
 
@@ -202,27 +195,23 @@ public class Profile extends javax.swing.JPanel {
         BufferedImage image = ImageIO.read(new File(path));
         ImageIO.write(image, ext, destinationFile);
 
-        ResultSet rs = MySQL.execute("SELECT `path` FROM `profile_img` WHERE `employee_email`='" + this.email + "'");
+        ResultSet rs = MySQL.execute("SELECT `path` FROM `profile_img` WHERE `employee_id`='" + this.id + "'");
 
         if (rs.next()) {
-            MySQL.execute("UPDATE `profile_img` SET `path`='" + getImage + "' WHERE `employee_email`='" + this.email + "'");
-            JOptionPane jo = new JOptionPane();
-            jo.setBackground(Color.WHITE);
+            MySQL.execute("UPDATE `profile_img` SET `path`='" + getImage + "' WHERE `employee_id`='" + this.id + "'");
             JLabel l = new JLabel(new ImageIcon("src/img/hurray.gif"));
             l.setText("Profile Updated");
             l.setHorizontalTextPosition(2);
             l.setIconTextGap(20);
-            jo.showMessageDialog(ad, l, "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(ad, l, "Success", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
-            MySQL.execute("INSERT INTO `profile_img`(`employee_email`,`path`) VALUES('" + email + "','" + getImage + "')");
-            JOptionPane jo = new JOptionPane();
-            jo.setBackground(Color.WHITE);
+            MySQL.execute("INSERT INTO `profile_img`(`employee_id`,`path`) VALUES('" + id + "','" + getImage + "')");
             JLabel l = new JLabel(new ImageIcon("src/img/hurray.gif"));
             l.setText("Profile Updated");
             l.setHorizontalTextPosition(2);
             l.setIconTextGap(20);
-            jo.showMessageDialog(ad, l, "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(ad, l, "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }

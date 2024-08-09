@@ -4,10 +4,13 @@ import model.MySQL;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Login extends javax.swing.JFrame {
+
+    HashMap<String, String> user = new HashMap<>();
 
     public Login() {
         initComponents();
@@ -189,12 +192,16 @@ public class Login extends javax.swing.JFrame {
                 ResultSet resultSet = MySQL.execute("SELECT * FROM employee INNER JOIN `employee_type` ON (`employee_type`.`id`=`employee`.`employee_type_id`) WHERE `email`='" + email + "' AND `password`='" + password + "'");
 
                 if (resultSet.next()) {
+                    int employee_id= resultSet.getInt("employee_id");
                     String employee_email = resultSet.getString("email");
                     String f_name = resultSet.getString("first_name");
                     String l_name = resultSet.getString("last_name");
                     String role = resultSet.getString("name");
+                    user.put("email", employee_email);
+                    user.put("name", f_name+" "+l_name);
+                    user.put("type", role);
 
-                    AdminDashboard db = new AdminDashboard(employee_email, f_name + " " + l_name, role);
+                    AdminDashboard db = new AdminDashboard(employee_id,employee_email, f_name + " " + l_name, role);
                     db.setVisible(true);
                     this.dispose();
 
@@ -234,7 +241,8 @@ public class Login extends javax.swing.JFrame {
         UIManager.put("TextComponent.arc", 999);
         UIManager.put("Component.focusWidth", 0);
         UIManager.put("ScrollBar.thumbArc", 999);
-        UIManager.put("ScrollBar.width", 8);
+        UIManager.put("ScrollBar.width", 7);
+        UIManager.put("OptionPane.background", new Color(255, 255, 255));
         UIManager.put("ScrollBar.borderWidth", 0);
         UIManager.put("ScrollBar.hoverThumbColor", new Color(153, 51, 255));//[153,51,255]
         UIManager.put("[style]Panel.myRoundPanel",
@@ -249,7 +257,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emailInvalidIcon;
     private javax.swing.JLabel emailLabel;

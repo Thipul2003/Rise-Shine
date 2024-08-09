@@ -12,15 +12,17 @@ import javax.swing.UIManager;
 
 public class AdminDashboard extends javax.swing.JFrame {
 
+    private int id = 1;
     private String email = "admin@gmail.com";
     private String name;
     private String role;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
 
-    public AdminDashboard(String email, String name, String role) {
+    public AdminDashboard(Integer id, String email, String name, String role) {
         initComponents();
-        this.email = email;
+//        this.email = email;
+//        this.id = id;
         this.name = name;
         this.role = role;
         jLabel5.setText(name);
@@ -835,7 +837,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void downMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_downMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_downMouseClicked
 
     private void viewGrnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewGrnMouseClicked
@@ -889,7 +890,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_issueGrnMouseExited
 
     private void down1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_down1MouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_down1MouseClicked
 
     private void GRNbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GRNbtnActionPerformed
@@ -1122,7 +1122,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         returns();
         try {
-            Profile profile = new Profile(this.email);
+            Profile profile = new Profile(this.id, this.email);
             rightPanel.removeAll();
             rightPanel.add(profile, BorderLayout.CENTER);
         } catch (Exception e) {
@@ -1134,16 +1134,13 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void settingFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_settingFocusGained
-        // TODO add your handling code here:
     }//GEN-LAST:event_settingFocusGained
 
     private void settingFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_settingFocusLost
-        // TODO add your handling code here:
         //
     }//GEN-LAST:event_settingFocusLost
 
     private void settingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_settingMouseClicked
 
     private void settingMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingMouseEntered
@@ -1202,7 +1199,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         returns();
         try {
-            Profile profile = new Profile(this.email);
+            Profile profile = new Profile(this.id, this.email);
             rightPanel.removeAll();
             rightPanel.add(profile, BorderLayout.CENTER);
         } catch (Exception e) {
@@ -1213,9 +1210,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         profileBtn.setSelected(true);
     }//GEN-LAST:event_jLabel5MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         FlatMacLightLaf.setup();
         UIManager.put("ToggleButton.selectedBackground", new Color(119, 82, 254));
@@ -1229,7 +1223,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         UIManager.put("Component.focusWidth", 0);
         UIManager.put("ScrollBar.thumbArc", 999);
         UIManager.put("ScrollBar.width", 7);
-        UIManager. put("OptionPane.background", new Color(255, 255, 255));
+        UIManager.put("OptionPane.background", new Color(255, 255, 255));
         UIManager.put("ScrollBar.borderWidth", 0);
         UIManager.put("ScrollBar.hoverThumbColor", new Color(153, 51, 255));//[153,51,255]
         UIManager.put("[style]Panel.myRoundPanel",
