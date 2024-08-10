@@ -327,8 +327,7 @@ public class Brands extends javax.swing.JPanel {
 
     private void brandSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_brandSearchFocusGained
 
-        brandSearch.setText("");
-        //loadBrand();
+        brandSearch.setText(null);
     }//GEN-LAST:event_brandSearchFocusGained
 
     private void brandSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_brandSearchFocusLost

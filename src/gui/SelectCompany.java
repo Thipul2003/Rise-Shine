@@ -22,15 +22,17 @@ public class SelectCompany extends javax.swing.JDialog {
 
     private void tableSelect() {
         companyTableModel1.getjTable2().addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                jTable2MouseClicked(evt);
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                jTable2MouseClicked(me);
             }
+
         });
     }
 
     private void jTable2MouseClicked(MouseEvent evt) {
         JTable table = companyTableModel1.getjTable2();
-       int row = table.getSelectedRow();
+        int row = table.getSelectedRow();
         if (evt.getButton() == 1 && evt.getClickCount() == 2) {
             if (supplier != null) {
                 supplier.getCompanyId().setText(String.valueOf(table.getValueAt(row, 0)));
@@ -41,6 +43,7 @@ public class SelectCompany extends javax.swing.JDialog {
             }
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -63,7 +66,7 @@ public class SelectCompany extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Search Company");
+        jLabel2.setText("Select Company");
 
         jButton2.setBackground(new java.awt.Color(119, 82, 254));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-company-25 (1).png"))); // NOI18N
@@ -86,7 +89,7 @@ public class SelectCompany extends javax.swing.JDialog {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 502, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 507, Short.MAX_VALUE)
                 .addComponent(reload, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

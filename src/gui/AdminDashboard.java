@@ -12,12 +12,12 @@ import javax.swing.UIManager;
 
 public class AdminDashboard extends javax.swing.JFrame {
 
-    private int id = 1;
-    private String email = "admin@gmail.com";
+    private final int id = 1;
+    private final String email = "admin@gmail.com";
     private String name;
     private String role;
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
 
     public AdminDashboard(Integer id, String email, String name, String role) {
         initComponents();

@@ -203,9 +203,9 @@ public class Company extends javax.swing.JPanel {
         registerPanel.add(jButton3);
         jButton3.setBounds(25, 25, 49, 45);
 
-        deleteBtn.setBackground(new java.awt.Color(51, 255, 255));
+        deleteBtn.setBackground(new java.awt.Color(227, 235, 192));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        deleteBtn.setForeground(new java.awt.Color(119, 82, 254));
+        deleteBtn.setForeground(new java.awt.Color(255, 51, 51));
         deleteBtn.setText("Deactive");
         deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.setEnabled(false);

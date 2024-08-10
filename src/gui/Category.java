@@ -318,7 +318,7 @@ public class Category extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void categorySearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_categorySearchFocusGained
-        categorySearch.setText("");
+        categorySearch.setText(null);
     }//GEN-LAST:event_categorySearchFocusGained
 
     private void categorySearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_categorySearchFocusLost

@@ -17,7 +17,7 @@ public class SupplierTableModel extends javax.swing.JPanel {
         this.supplier = supplier;
     }
 
-    public SupplierTableModel() {
+    public SupplierTableModel(){
         initComponents();
         showGridLines();
         loadSuppliers();
@@ -188,8 +188,6 @@ public class SupplierTableModel extends javax.swing.JPanel {
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         if (supplier != null) {
             getTableSelection(evt);
-        } else {
-            System.out.println("Null");
         }
     }//GEN-LAST:event_jTable2MouseClicked
 

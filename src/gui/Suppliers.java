@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import model.CompanyTableModel;
 import model.MySQL;
 
 public class Suppliers extends javax.swing.JPanel {
@@ -255,9 +254,9 @@ public class Suppliers extends javax.swing.JPanel {
         registerPanel.add(jButton3);
         jButton3.setBounds(25, 25, 49, 45);
 
-        suppDeleteBtn.setBackground(new java.awt.Color(51, 255, 255));
+        suppDeleteBtn.setBackground(new java.awt.Color(227, 235, 192));
         suppDeleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        suppDeleteBtn.setForeground(new java.awt.Color(119, 82, 254));
+        suppDeleteBtn.setForeground(new java.awt.Color(255, 51, 51));
         suppDeleteBtn.setText("Deactive");
         suppDeleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         suppDeleteBtn.setEnabled(false);
