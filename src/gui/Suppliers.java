@@ -221,6 +221,7 @@ public class Suppliers extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         supplierTableModel1 = new model.SupplierTableModel();
 
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         setLayout(new java.awt.BorderLayout());
 
         registerPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -458,7 +459,7 @@ public class Suppliers extends javax.swing.JPanel {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 505, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 500, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

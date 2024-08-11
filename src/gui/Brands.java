@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorListener;
 
 public class Brands extends javax.swing.JPanel {
 
@@ -108,33 +109,7 @@ public class Brands extends javax.swing.JPanel {
                         .addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-
-                                if (e.getClickCount() == 1 && e.getButton() == 3) {
-                                    if (t.getMain().getBorder() instanceof FlatLineBorder) {
-                                        // Get the color of the LineBorder
-                                        Color borderColor = ((FlatLineBorder) t.getMain().getBorder()).getLineColor();
-
-                                        // Check if the color is red
-                                        if (Color.RED.equals(borderColor)) {
-                                            try {
-                                                int result = JOptionPane.showConfirmDialog(ad, "Do you want to Delete?", "Confirmation", JOptionPane.YES_NO_OPTION);
-                                                if (result == JOptionPane.YES_OPTION) {
-                                                    deleteImage(brand_name);
-                                                    MySQL.execute("DELETE FROM `brand` WHERE `name`='" + brand_name + "'");
-                                                    reload();
-                                                    JOptionPane.showMessageDialog(ad, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-                                                } else {
-                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
-                                                }
-
-                                            } catch (Exception ev) {
-                                                ev.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                }
-
+                                brandSectionMouseClicked(e, brand_name, t);
                             }
                         }
                         );
@@ -144,33 +119,7 @@ public class Brands extends javax.swing.JPanel {
                             @Override
                             public void mouseClicked(MouseEvent e
                             ) {
-                                if (e.getClickCount() == 1 && e.getButton() == 3) {
-
-                                    if (t.getMain().getBorder() instanceof FlatLineBorder) {
-                                        // Get the color of the LineBorder
-                                        Color borderColor = ((FlatLineBorder) t.getMain().getBorder()).getLineColor();
-
-                                        // Check if the color is red
-                                        if (Color.RED.equals(borderColor)) {
-                                            try {
-
-                                                int result = JOptionPane.showConfirmDialog(ad, "Do you want to Delete?", "Confirmation", JOptionPane.YES_NO_OPTION);
-                                                if (result == JOptionPane.YES_OPTION) {
-                                                    deleteImage(brand_name);
-                                                    MySQL.execute("DELETE FROM `brand` WHERE `name`='" + brand_name + "'");
-                                                    reload();
-                                                    JOptionPane.showMessageDialog(ad, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-                                                } else {
-                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
-                                                }
-
-                                            } catch (Exception ev) {
-                                                ev.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                }
+                                brandSectionMouseClicked(e, brand_name, t);
 
                             }
                         }
@@ -185,6 +134,34 @@ public class Brands extends javax.swing.JPanel {
 
         }
 
+    }
+
+    private void brandSectionMouseClicked(MouseEvent e, String brand_name, brandPanel t) {
+        if (e.getClickCount() == 1 && e.getButton() == 3) {
+            if (t.getMain().getBorder() instanceof FlatLineBorder) {
+               
+                Color borderColor = ((FlatLineBorder) t.getMain().getBorder()).getLineColor();
+
+                
+                if (Color.RED.equals(borderColor)) {
+                    try {
+                        int result = JOptionPane.showConfirmDialog(ad, "Do you want to Delete?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                        if (result == JOptionPane.YES_OPTION) {
+                            deleteImage(brand_name);
+                            MySQL.execute("DELETE FROM `brand` WHERE `name`='" + brand_name + "'");
+                            reload();
+                            JOptionPane.showMessageDialog(ad, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                        } else {
+                            t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
+                        }
+
+                    } catch (Exception ev) {
+                        ev.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -203,6 +180,7 @@ public class Brands extends javax.swing.JPanel {
         panel3 = new javax.swing.JPanel();
         brandsSection = new javax.swing.JPanel();
 
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         setLayout(new java.awt.BorderLayout());
 
         brandTop.setBackground(new java.awt.Color(255, 255, 255));
@@ -252,10 +230,10 @@ public class Brands extends javax.swing.JPanel {
             }
         });
         brandSearch.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 brandSearchInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         brandSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -284,7 +262,7 @@ public class Brands extends javax.swing.JPanel {
                     .addGroup(brandTopLayout.createSequentialGroup()
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                         .addGap(278, 278, 278)
                         .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41))))

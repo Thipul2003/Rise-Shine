@@ -1,6 +1,9 @@
 package gui;
 
+import com.formdev.flatlaf.ui.FlatLineBorder;
+import java.awt.Color;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
@@ -10,6 +13,12 @@ import model.MySQL;
 import model.brandPanel;
 
 public class SelectCategory extends javax.swing.JDialog {
+
+    private Products product;
+
+    public void setProduct(Products product) {
+        this.product = product;
+    }
 
     public SelectCategory(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);
@@ -38,6 +47,7 @@ public class SelectCategory extends javax.swing.JDialog {
             ResultSet resultSet = MySQL.execute(query);
 
             while (resultSet.next()) {
+                int category_id = resultSet.getInt("id");
                 String category_name = resultSet.getString("name");
                 String path = resultSet.getString("img");
 
@@ -54,10 +64,8 @@ public class SelectCategory extends javax.swing.JDialog {
                         .addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-
-                                if (e.getClickCount() == 2 && e.getButton() == 1) {
-
-                                }
+                                categoryPanelMouseClicked(e, category_id, category_name);
+                                SelectBrand.setBlueBorder(t);
 
                             }
                         }
@@ -68,10 +76,8 @@ public class SelectCategory extends javax.swing.JDialog {
                             @Override
                             public void mouseClicked(MouseEvent e
                             ) {
-                                if (e.getClickCount() == 2 && e.getButton() == 1) {
-
-                                }
-
+                                categoryPanelMouseClicked(e, category_id, category_name);
+                                SelectBrand.setBlueBorder(t);
                             }
                         }
                         );
@@ -85,6 +91,17 @@ public class SelectCategory extends javax.swing.JDialog {
 
         }
 
+    }
+
+    private void categoryPanelMouseClicked(MouseEvent evt, int id, String name) {
+        if (evt.getClickCount() == 2 && evt.getButton() == 1) {
+            if (product != null) {
+                product.getCategoryName().setText(name);
+                product.setCategory_id(id);
+                this.dispose();
+
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -196,6 +196,7 @@ public class Category extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
 
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         setLayout(new java.awt.BorderLayout());
 
         brandTop.setBackground(new java.awt.Color(255, 255, 255));
@@ -248,10 +249,10 @@ public class Category extends javax.swing.JPanel {
             }
         });
         categorySearch.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 categorySearchInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         categorySearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -281,7 +282,7 @@ public class Category extends javax.swing.JPanel {
                     .addGroup(brandTopLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 435, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 436, Short.MAX_VALUE)
                         .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))))
         );

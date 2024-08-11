@@ -38,9 +38,15 @@ public class brandPanel extends javax.swing.JPanel {
         return brandSection;
     }
 
-    
-    
-    
+    private void setBlue() {
+        main.setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));//[119,82,254]
+
+    }
+
+    private void setRed() {
+        main.setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), Color.red, 3, 50));
+
+    }
 
     public brandPanel() {
         initComponents();
@@ -53,14 +59,14 @@ public class brandPanel extends javax.swing.JPanel {
         selected();
     }
 
-    private void selected() {
+    public void selected() {
 
         if (isSelected) {//false
-            main.setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), Color.red, 3, 50));
+            setRed();
             isSelected = false;
 
         } else {
-            main.setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));//[119,82,254]
+            setBlue();
             isSelected = true;
 
         }
@@ -79,12 +85,26 @@ public class brandPanel extends javax.swing.JPanel {
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setPreferredSize(new java.awt.Dimension(50, 249));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
+        });
 
         main.setBackground(new java.awt.Color(255, 255, 255));
         main.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         main.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mainMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mainMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mainMouseExited(evt);
             }
         });
 
@@ -99,6 +119,14 @@ public class brandPanel extends javax.swing.JPanel {
         logo.setBackground(new java.awt.Color(255, 255, 255));
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoMouseExited(evt);
+            }
+        });
         logoSection.add(logo, java.awt.BorderLayout.CENTER);
 
         brandSection.setBackground(new java.awt.Color(255, 255, 255));
@@ -113,6 +141,14 @@ public class brandPanel extends javax.swing.JPanel {
         brandName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         brandName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         brandName.setText("jLabel1");
+        brandName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                brandNameMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                brandNameMouseExited(evt);
+            }
+        });
         brandSection.add(brandName, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
@@ -154,13 +190,43 @@ public class brandPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_logoSectionMouseClicked
 
     private void mainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMouseClicked
-       if (evt.getClickCount() == 1 && evt.getButton() == 3) {
-            selected();
+        if (evt.getClickCount() == 1 && evt.getButton() == 3) {
+//            selected();
 
         }
     }//GEN-LAST:event_mainMouseClicked
 
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
 
+    }//GEN-LAST:event_formMouseEntered
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+
+    }//GEN-LAST:event_formMouseExited
+
+    private void mainMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMouseEntered
+    }//GEN-LAST:event_mainMouseEntered
+
+    private void mainMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMouseExited
+    }//GEN-LAST:event_mainMouseExited
+
+    private void logoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoMouseEntered
+
+    private void logoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoMouseExited
+
+    private void brandNameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_brandNameMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brandNameMouseEntered
+
+    private void brandNameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_brandNameMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brandNameMouseExited
+
+//[166, 189]
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel brandName;
     private javax.swing.JPanel brandSection;

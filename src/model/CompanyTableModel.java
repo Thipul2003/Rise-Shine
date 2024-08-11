@@ -1,7 +1,6 @@
 package model;
 
 import gui.Company;
-import gui.SelectCompany;
 import gui.Suppliers;
 import java.awt.Color;
 import java.awt.event.MouseEvent;

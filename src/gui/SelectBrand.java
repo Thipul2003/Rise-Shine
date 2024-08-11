@@ -10,11 +10,17 @@ import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.MySQL;
+import model.bb;
 import model.brandPanel;
 
 public class SelectBrand extends javax.swing.JDialog {
 
     private AdminDashboard ad;
+    private Products product;
+
+    public void setProduct(Products product) {
+        this.product = product;
+    }
 
     public SelectBrand(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);
@@ -26,6 +32,10 @@ public class SelectBrand extends javax.swing.JDialog {
         initComponents();
         loadBrand();
 
+    }
+
+    public static void setBlueBorder(brandPanel t) {
+        t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
     }
 
     private void loadBrand() {
@@ -44,12 +54,13 @@ public class SelectBrand extends javax.swing.JDialog {
             ResultSet resultSet = MySQL.execute(query);
 
             while (resultSet.next()) {
+                int brand_id = resultSet.getInt("id");
                 String brand_name = resultSet.getString("name");
                 String path = resultSet.getString("img");
 
 //                brandDetails.put(resultSet.getString("name"), brand_name);
 //                brandDetails.put(resultSet.getString("img"), path);
-                brandPanel t = new brandPanel();
+                bb t = new bb();
                 t.setVisible(true);
                 t.getBrandName().setText(brand_name);
                 ImageIcon image = new ImageIcon(path);
@@ -60,13 +71,12 @@ public class SelectBrand extends javax.swing.JDialog {
                         .addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-
-                                if (e.getClickCount() == 2 && e.getButton() == 1) {
-                                    System.out.println("Success");
-
-                                }
+                                System.out.println("hiii");
+                                brandPanelMouseClicked(e, brand_id, brand_name);
+                                setBlueBorder(t);
 
                             }
+
                         }
                         );
 
@@ -75,10 +85,9 @@ public class SelectBrand extends javax.swing.JDialog {
                             @Override
                             public void mouseClicked(MouseEvent e
                             ) {
-                                if (e.getClickCount() == 2 && e.getButton() == 1) {
-                                    System.out.println("Success");
-                                }
 
+                                brandPanelMouseClicked(e, brand_id, brand_name);
+                                setBlueBorder(t);
                             }
                         }
                         );
@@ -92,6 +101,17 @@ public class SelectBrand extends javax.swing.JDialog {
 
         }
 
+    }
+
+    private void brandPanelMouseClicked(MouseEvent evt, int id, String name) {
+        if (evt.getClickCount() == 2 && evt.getButton() == 1) {
+            if (product != null) {
+                product.getBrandName().setText(name);
+                product.setBrand_id(id);
+                this.dispose();
+
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
