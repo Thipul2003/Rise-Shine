@@ -1,13 +1,16 @@
 package gui;
 
-import Model.MySQL;
+import model.MySQL;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Login extends javax.swing.JFrame {
+
+    HashMap<String, String> user = new HashMap<>();
 
     public Login() {
         initComponents();
@@ -138,21 +141,17 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusGained
-        // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldFocusGained
 
     private void emailTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_emailTextFieldInputMethodTextChanged
-        // TODO add your handling code here:
 
     }//GEN-LAST:event_emailTextFieldInputMethodTextChanged
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
-        // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton1MouseEntered
 
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
-        // TODO add your handling code here:
         //jButton1.setBackground(new Color(0, 153, 255));
 
     }//GEN-LAST:event_jButton1MouseExited
@@ -170,6 +169,8 @@ public class Login extends javax.swing.JFrame {
             passwordTextField.grabFocus();
         } else if (!password.matches(passwordRegex)) {
             passwordInvalidIcon.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Minimum eight characters,at least one uppercase letter one lowercase letter one number one special character", "Invalid Password", JOptionPane.WARNING_MESSAGE);
+
         } else {
             passwordInvalidIcon.setVisible(false);
 
@@ -188,16 +189,23 @@ public class Login extends javax.swing.JFrame {
         }
         if (isvalidated) {
             try {
-                ResultSet resultSet = MySQL.execute("SELECT * FROM employee WHERE `email`='" + email + "' AND `password`='" + password + "'");
-                
-                if(resultSet.next()){
+                ResultSet resultSet = MySQL.execute("SELECT * FROM employee INNER JOIN `employee_type` ON (`employee_type`.`id`=`employee`.`employee_type_id`) WHERE `email`='" + email + "' AND `password`='" + password + "'");
+
+                if (resultSet.next()) {
+                    int employee_id= resultSet.getInt("employee_id");
                     String employee_email = resultSet.getString("email");
-                    
-                    AdminDashboard db = new AdminDashboard(employee_email);
+                    String f_name = resultSet.getString("first_name");
+                    String l_name = resultSet.getString("last_name");
+                    String role = resultSet.getString("name");
+                    user.put("email", employee_email);
+                    user.put("name", f_name+" "+l_name);
+                    user.put("type", role);
+
+                    AdminDashboard db = new AdminDashboard(employee_id,employee_email, f_name + " " + l_name, role);
                     db.setVisible(true);
                     this.dispose();
-                    
-                }else{
+
+                } else {
                     JOptionPane.showMessageDialog(this, "Invalid Email or Password", "Invalid", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception e) {
@@ -221,9 +229,6 @@ public class Login extends javax.swing.JFrame {
         notvisiblePassword.setVisible(false);
     }//GEN-LAST:event_notvisiblePasswordMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         FlatMacLightLaf.setup();
         UIManager.put("ToggleButton.selectedBackground", new Color(119, 82, 254));
@@ -236,7 +241,8 @@ public class Login extends javax.swing.JFrame {
         UIManager.put("TextComponent.arc", 999);
         UIManager.put("Component.focusWidth", 0);
         UIManager.put("ScrollBar.thumbArc", 999);
-        UIManager.put("ScrollBar.width", 8);
+        UIManager.put("ScrollBar.width", 7);
+        UIManager.put("OptionPane.background", new Color(255, 255, 255));
         UIManager.put("ScrollBar.borderWidth", 0);
         UIManager.put("ScrollBar.hoverThumbColor", new Color(153, 51, 255));//[153,51,255]
         UIManager.put("[style]Panel.myRoundPanel",
@@ -245,14 +251,12 @@ public class Login extends javax.swing.JFrame {
                 + "[light]border: 16,16,16,16,shade(@background,10%),,12;"
                 + "[dark]border: 16,16,16,16,tint(@background,10%),,12");
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emailInvalidIcon;
     private javax.swing.JLabel emailLabel;

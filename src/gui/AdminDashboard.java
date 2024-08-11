@@ -2,34 +2,66 @@ package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.formdev.flatlaf.util.SwingUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class AdminDashboard extends javax.swing.JFrame {
 
-    private String email;
-    private Dashboard db = new Dashboard();
+    private final int id = 1;
+    private final String email = "admin@gmail.com";
+    private String name;
+    private String role;
 
-    public AdminDashboard(String email) {
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+
+    public AdminDashboard(Integer id, String email, String name, String role) {
         initComponents();
-        this.email = email;
-        jPanel9.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
+//        this.email = email;
+//        this.id = id;
+        this.name = name;
+        this.role = role;
+        jLabel5.setText(name);
+        jLabel2.setText(role);
+        notiyPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
+        TimePanel.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
         this.setExtendedState(MAXIMIZED_BOTH);
         loadDashboard();
+        time();
 
     }
 
     public AdminDashboard() {
         initComponents();
-        jPanel9.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
+        notiyPanel.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
+        TimePanel.putClientProperty(FlatClientProperties.STYLE, "arc: 999");
         this.setExtendedState(MAXIMIZED_BOTH);
         loadDashboard();
+        time();
+
     }
 
+    private void time() {
+        Runnable task = () -> {
+            while (true) {
+                LocalTime now = LocalTime.now();
+                timeLabel.setText("Time :" + now.format(formatter));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread interrupted");
+                    break;
+                }
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.start();
+    }
 //    public news n = new news();
 //
 //    private void popup() {
@@ -37,6 +69,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 //        n.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.0f));
 //        n.setVisible(true);
 //    }
+
     private void returns() {
         issueGrn.setFont(new Font("Sylfaen", 0, 16));
         viewGrn.setFont(new Font("Sylfaen", 0, 16));
@@ -55,8 +88,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             rightPanel.add(db2, BorderLayout.CENTER);
             rightPanel.revalidate();
             rightPanel.repaint();
-        } else {
-            System.out.println("HOi");
         }
     }
 
@@ -116,10 +147,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         profileBtn = new javax.swing.JToggleButton();
         topBar = new javax.swing.JPanel();
         leftTopBar = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        TimePanel = new javax.swing.JPanel();
+        timeLabel = new javax.swing.JLabel();
         rightTopBar = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        notiyPanel = new javax.swing.JPanel();
         setting = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         notification = new javax.swing.JButton();
@@ -128,12 +159,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         rightPanel = new javax.swing.JPanel();
-        contentCenter = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manager Dashboard");
+        setPreferredSize(new java.awt.Dimension(1000, 883));
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                formWindowStateChanged(evt);
+            }
+        });
 
-        leftPanel.setBackground(new java.awt.Color(255, 255, 255));
         leftPanel.setPreferredSize(new java.awt.Dimension(300, 813));
         leftPanel.setLayout(new java.awt.BorderLayout());
 
@@ -355,7 +390,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         companyBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         companyBtn.setIconTextGap(34);
         companyBtn.setMargin(new java.awt.Insets(2, 80, 2, 14));
-        companyBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-supplier-25 (1).png"))); // NOI18N
+        companyBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-company-25 (1).png"))); // NOI18N
         companyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 companyBtnActionPerformed(evt);
@@ -611,18 +646,18 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         getContentPane().add(leftPanel, java.awt.BorderLayout.LINE_START);
 
-        topBar.setBackground(new java.awt.Color(255, 255, 255));
         topBar.setPreferredSize(new java.awt.Dimension(968, 70));
         topBar.setLayout(new java.awt.BorderLayout());
 
         leftTopBar.setBackground(new java.awt.Color(255, 255, 255));
         leftTopBar.setPreferredSize(new java.awt.Dimension(300, 64));
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        TimePanel.setLayout(new java.awt.BorderLayout());
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("1:009 AM");
-        jPanel1.add(jLabel6, java.awt.BorderLayout.CENTER);
+        timeLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeLabel.setText("TODAY :1:009 AM");
+        TimePanel.add(timeLabel, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout leftTopBarLayout = new javax.swing.GroupLayout(leftTopBar);
         leftTopBar.setLayout(leftTopBarLayout);
@@ -630,14 +665,14 @@ public class AdminDashboard extends javax.swing.JFrame {
             leftTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftTopBarLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TimePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         leftTopBarLayout.setVerticalGroup(
             leftTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftTopBarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(TimePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -646,9 +681,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightTopBar.setBackground(new java.awt.Color(255, 255, 255));
         rightTopBar.setPreferredSize(new java.awt.Dimension(350, 250));
 
-        jPanel9.setBackground(new java.awt.Color(119, 82, 254));
+        notiyPanel.setBackground(new java.awt.Color(119, 82, 254));
 
-        setting.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-settings-25.png"))); // NOI18N
+        setting.setBackground(new java.awt.Color(119, 82, 254));
+        setting.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-setting-25.png"))); // NOI18N
         setting.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setting.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -670,7 +706,8 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-power-25.png"))); // NOI18N
+        logout.setBackground(new java.awt.Color(119, 82, 254));
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-power-25 (1).png"))); // NOI18N
         logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -686,7 +723,8 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        notification.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-notification-23.png"))); // NOI18N
+        notification.setBackground(new java.awt.Color(119, 82, 254));
+        notification.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-notification-24.png"))); // NOI18N
         notification.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         notification.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -697,57 +735,65 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout notiyPanelLayout = new javax.swing.GroupLayout(notiyPanel);
+        notiyPanel.setLayout(notiyPanelLayout);
+        notiyPanelLayout.setHorizontalGroup(
+            notiyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(notiyPanelLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(setting, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(notification, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        notiyPanelLayout.setVerticalGroup(
+            notiyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(notiyPanelLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(notiyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(setting)
                     .addComponent(logout)
                     .addComponent(notification, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(5, 5, 5))
         );
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("jLabel5");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-male-user-30.png"))); // NOI18N
+        jLabel5.setText("Thipul Liyanage");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout rightTopBarLayout = new javax.swing.GroupLayout(rightTopBar);
         rightTopBar.setLayout(rightTopBarLayout);
         rightTopBarLayout.setHorizontalGroup(
             rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopBarLayout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 19, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(notiyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rightTopBarLayout.setVerticalGroup(
             rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(rightTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(notiyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         topBar.add(rightTopBar, java.awt.BorderLayout.LINE_END);
 
         centerTopBar.setBackground(new java.awt.Color(255, 255, 255));
+        centerTopBar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         centerTopBar.setPreferredSize(new java.awt.Dimension(500, 50));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -765,28 +811,25 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(169, 169, 169))
         );
         centerTopBarLayout.setVerticalGroup(
             centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(centerTopBarLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(centerTopBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel27))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         topBar.add(centerTopBar, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(topBar, java.awt.BorderLayout.PAGE_START);
 
+        rightPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 1, 1));
         rightPanel.setLayout(new java.awt.BorderLayout());
-
-        contentCenter.setLayout(new javax.swing.BoxLayout(contentCenter, javax.swing.BoxLayout.LINE_AXIS));
-        rightPanel.add(contentCenter, java.awt.BorderLayout.CENTER);
-
         getContentPane().add(rightPanel, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -794,7 +837,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void downMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_downMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_downMouseClicked
 
     private void viewGrnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewGrnMouseClicked
@@ -848,7 +890,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_issueGrnMouseExited
 
     private void down1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_down1MouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_down1MouseClicked
 
     private void GRNbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GRNbtnActionPerformed
@@ -1080,24 +1121,26 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         returns();
-        Profile profile = new Profile();
-        rightPanel.removeAll();
-        rightPanel.add(profile, BorderLayout.CENTER);
+        try {
+            Profile profile = new Profile(this.id, this.email);
+            rightPanel.removeAll();
+            rightPanel.add(profile, BorderLayout.CENTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         rightPanel.revalidate();
         rightPanel.repaint();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void settingFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_settingFocusGained
-        // TODO add your handling code here:
     }//GEN-LAST:event_settingFocusGained
 
     private void settingFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_settingFocusLost
-        // TODO add your handling code here:
         //
     }//GEN-LAST:event_settingFocusLost
 
     private void settingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_settingMouseClicked
 
     private void settingMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingMouseEntered
@@ -1148,9 +1191,25 @@ public class AdminDashboard extends javax.swing.JFrame {
 //        n.dispose();
     }//GEN-LAST:event_notificationMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
+    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+
+
+    }//GEN-LAST:event_formWindowStateChanged
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        returns();
+        try {
+            Profile profile = new Profile(this.id, this.email);
+            rightPanel.removeAll();
+            rightPanel.add(profile, BorderLayout.CENTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        rightPanel.revalidate();
+        rightPanel.repaint();
+        profileBtn.setSelected(true);
+    }//GEN-LAST:event_jLabel5MouseClicked
+
     public static void main(String args[]) {
         FlatMacLightLaf.setup();
         UIManager.put("ToggleButton.selectedBackground", new Color(119, 82, 254));
@@ -1163,7 +1222,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         UIManager.put("TextComponent.arc", 999);
         UIManager.put("Component.focusWidth", 0);
         UIManager.put("ScrollBar.thumbArc", 999);
-        UIManager.put("ScrollBar.width", 8);
+        UIManager.put("ScrollBar.width", 7);
+        UIManager.put("OptionPane.background", new Color(255, 255, 255));
         UIManager.put("ScrollBar.borderWidth", 0);
         UIManager.put("ScrollBar.hoverThumbColor", new Color(153, 51, 255));//[153,51,255]
         UIManager.put("[style]Panel.myRoundPanel",
@@ -1184,12 +1244,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel GReceiveNoption;
     private javax.swing.JPanel GReturnOption;
     private javax.swing.JPanel InvoiceOption;
+    private javax.swing.JPanel TimePanel;
     private javax.swing.JToggleButton brandBtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JToggleButton categoryBtn;
     private javax.swing.JPanel centerTopBar;
     private javax.swing.JToggleButton companyBtn;
-    private javax.swing.JPanel contentCenter;
     private javax.swing.JToggleButton customerBtn;
     private javax.swing.JToggleButton dashboardBtn;
     private javax.swing.JLabel down;
@@ -1211,9 +1271,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1227,6 +1284,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton logout;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton notification;
+    private javax.swing.JPanel notiyPanel;
     private javax.swing.JToggleButton productBtn;
     private javax.swing.JToggleButton profileBtn;
     private javax.swing.JToggleButton returnBtn;
@@ -1237,6 +1295,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton setting;
     private javax.swing.JToggleButton stockBtn;
     private javax.swing.JToggleButton supplierBtn1;
+    private javax.swing.JLabel timeLabel;
     private javax.swing.JPanel topBar;
     private javax.swing.JToggleButton userBtn;
     private javax.swing.JLabel viewGrn;
