@@ -206,7 +206,6 @@ public class Suppliers extends javax.swing.JPanel {
         companyId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         companyName1 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         suppFName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         supEmail = new javax.swing.JTextField();
@@ -367,12 +366,6 @@ public class Suppliers extends javax.swing.JPanel {
         });
         registerPanel.add(companyName1);
         companyName1.setBounds(20, 210, 420, 47);
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel8.setText("First Name");
-        registerPanel.add(jLabel8);
-        jLabel8.setBounds(20, 280, 74, 17);
 
         suppFName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         suppFName.setMargin(new java.awt.Insets(2, 20, 2, 20));
@@ -545,7 +538,6 @@ public class Suppliers extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton selectCompany;

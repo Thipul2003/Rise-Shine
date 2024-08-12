@@ -15,6 +15,11 @@ import model.brandPanel;
 public class SelectBrand extends javax.swing.JDialog {
 
     private AdminDashboard ad;
+    private Products product;
+
+    public void setProduct(Products product) {
+        this.product = product;
+    }
 
     public SelectBrand(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);

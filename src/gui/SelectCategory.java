@@ -11,6 +11,12 @@ import model.brandPanel;
 
 public class SelectCategory extends javax.swing.JDialog {
 
+    private Products product;
+
+    public void setProduct(Products product) {
+        this.product = product;
+    }
+
     public SelectCategory(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);
         initComponents();
