@@ -12,6 +12,7 @@ import java.io.File;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 public class Category extends javax.swing.JPanel {
 
@@ -96,6 +97,7 @@ public class Category extends javax.swing.JPanel {
                 ImageIcon image = new ImageIcon(path);
                 Image new_img = image.getImage().getScaledInstance(129, 138, Image.SCALE_AREA_AVERAGING);
                 t.getLogo().setIcon(new ImageIcon(new_img));
+                t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(153, 220, 79), 1, 50));//[153,220,79]
 
                 t.getBrandSection()
                         .addMouseListener(new MouseAdapter() {
@@ -118,7 +120,7 @@ public class Category extends javax.swing.JPanel {
                                                     JOptionPane.showMessageDialog(ad, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                                                 } else {
-                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));//[153,220,79]
+                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(153, 220, 79), 1, 50));//[153,220,79]
                                                 }
 
                                             } catch (Exception ev) {
@@ -155,7 +157,7 @@ public class Category extends javax.swing.JPanel {
                                                     JOptionPane.showMessageDialog(ad, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                                                 } else {
-                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
+                                                    t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(153, 220, 79), 1, 50));
                                                 }
 
                                             } catch (Exception ev) {

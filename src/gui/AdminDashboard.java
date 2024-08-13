@@ -32,6 +32,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         loadDashboard();
         time();
+        isSelected();
 
     }
 
@@ -42,6 +43,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         loadDashboard();
         time();
+        isSelected();
 
     }
 
@@ -88,6 +90,88 @@ public class AdminDashboard extends javax.swing.JFrame {
             rightPanel.add(db2, BorderLayout.CENTER);
             rightPanel.revalidate();
             rightPanel.repaint();
+        }
+    }
+
+    private void isSelected() {
+        if (dashboardBtn.isSelected()) {
+            dashboardBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            dashboardBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (userBtn.isSelected()) {
+            userBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            userBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (customerBtn.isSelected()) {
+            customerBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            customerBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (productBtn.isSelected()) {
+            productBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            productBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (profileBtn.isSelected()) {
+            profileBtn.setFont(new Font("Sylfaen", 1, 18));
+        } else {
+            profileBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (brandBtn.isSelected()) {
+            brandBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            brandBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (categoryBtn.isSelected()) {
+            categoryBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            categoryBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+
+        if (supplierBtn1.isSelected()) {
+            supplierBtn1.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            supplierBtn1.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (companyBtn.isSelected()) {
+            companyBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            companyBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (stockBtn.isSelected()) {
+            stockBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            stockBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (GRNbtn.isSelected()) {
+            GRNbtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            GRNbtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (returnBtn.isSelected()) {
+            returnBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            returnBtn.setFont(new Font("Sylfaen", 0, 18));
+
+        }
+        if (invoiceBtn.isSelected()) {
+            invoiceBtn.setFont(new Font("Sylfaen", 1, 17));
+        } else {
+            invoiceBtn.setFont(new Font("Sylfaen", 0, 18));
+
         }
     }
 
@@ -282,7 +366,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         customerBtn.setText("Manage Customers");
         customerBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         customerBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        customerBtn.setIconTextGap(34);
+        customerBtn.setIconTextGap(28);
         customerBtn.setMargin(new java.awt.Insets(2, 80, 2, 14));
         customerBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-customers-30 (1).png"))); // NOI18N
         customerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -311,7 +395,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         buttonGroup1.add(brandBtn);
         brandBtn.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         brandBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-tag-25.png"))); // NOI18N
-        brandBtn.setText("Brand Registeration");
+        brandBtn.setText("Brand Register");
         brandBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         brandBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         brandBtn.setIconTextGap(34);
@@ -327,7 +411,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         buttonGroup1.add(categoryBtn);
         categoryBtn.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         categoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-category-25.png"))); // NOI18N
-        categoryBtn.setText("Category Registeration");
+        categoryBtn.setText("Category Register");
         categoryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         categoryBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         categoryBtn.setIconTextGap(34);
@@ -385,7 +469,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         buttonGroup1.add(companyBtn);
         companyBtn.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         companyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-company-25.png"))); // NOI18N
-        companyBtn.setText("Company Registration");
+        companyBtn.setText("Company Register");
         companyBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         companyBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         companyBtn.setIconTextGap(34);
@@ -848,6 +932,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         viewInvoice.setFont(new Font("Sylfaen", 0, 16));
 
         GRNbtn.setSelected(true);
+        isSelected();
+
     }//GEN-LAST:event_viewGrnMouseClicked
 
     private void viewGrnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewGrnMouseEntered
@@ -873,6 +959,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         viewInvoice.setFont(new Font("Sylfaen", 0, 16));
 
         GRNbtn.setSelected(true);
+        isSelected();
     }//GEN-LAST:event_issueGrnMouseClicked
 
     private void issueGrnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_issueGrnMouseEntered
@@ -907,6 +994,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         issueInvoice.setFont(new Font("Sylfaen", 0, 16));
         viewInvoice.setFont(new Font("Sylfaen", 0, 16));
         returnBtn.setSelected(true);
+        isSelected();
+
     }//GEN-LAST:event_viewReturnMouseClicked
 
     private void viewReturnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewReturnMouseEntered
@@ -932,6 +1021,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         viewInvoice.setFont(new Font("Sylfaen", 0, 16));
 
         returnBtn.setSelected(true);
+        isSelected();
+
     }//GEN-LAST:event_issueReturnMouseClicked
 
     private void issueReturnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_issueReturnMouseEntered
@@ -956,6 +1047,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         viewGrn.setFont(new Font("Sylfaen", 0, 16));
         issueInvoice.setFont(new Font("Sylfaen", 0, 16));
         invoiceBtn.setSelected(true);
+        isSelected();
+
     }//GEN-LAST:event_viewInvoiceMouseClicked
 
     private void viewInvoiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewInvoiceMouseEntered
@@ -980,6 +1073,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         viewInvoice.setFont(new Font("Sylfaen", 0, 16));
         issueInvoice.setFont(new Font("Sylfaen", 1, 16));
         invoiceBtn.setSelected(true);
+        isSelected();
+
     }//GEN-LAST:event_issueInvoiceMouseClicked
 
     private void issueInvoiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_issueInvoiceMouseEntered
@@ -1005,6 +1100,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(dash, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_dashboardBtnActionPerformed
@@ -1016,6 +1112,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(user, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_userBtnActionPerformed
@@ -1027,6 +1124,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(customer, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_customerBtnActionPerformed
@@ -1038,6 +1136,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(product, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_productBtnActionPerformed
@@ -1049,6 +1148,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(brand, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_brandBtnActionPerformed
@@ -1060,6 +1160,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(category, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_categoryBtnActionPerformed
@@ -1071,6 +1172,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(supplier, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_supplierBtn1ActionPerformed
@@ -1082,6 +1184,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(company, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_companyBtnActionPerformed
@@ -1093,6 +1196,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(stock, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_stockBtnActionPerformed
@@ -1104,6 +1208,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(greturn, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_returnBtnActionPerformed
@@ -1115,6 +1220,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         rightPanel.add(invoice, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+        isSelected();
 
 
     }//GEN-LAST:event_invoiceBtnActionPerformed

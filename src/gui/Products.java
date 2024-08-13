@@ -61,6 +61,16 @@ public class Products extends javax.swing.JPanel {
         return productID;
     }
 
+    public void setBrand_id(int brand_id) {
+        this.brand_id = brand_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+    
+    
+
     private void reset() {
         productName.setText("");
         brandName.setText("");

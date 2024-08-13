@@ -43,15 +43,17 @@ public class ProductTableModel extends javax.swing.JPanel {
         search = productSearch.getText();
 
         String query = "SELECT * FROM `product` "
-                + "INNER JOIN `brand` ON (brand.id=product.brand_id) "
+                + "INNER JOIN `brand` ON (`brand`.`id`=`product`.`brand_id`) "
                 + "INNER JOIN `category` ON(`category`.`id`=`product`.`category_id`)"
-                + "INNER JOIN `status` ON (status.id=product.status_id) ";
+                + "INNER JOIN `status` ON (`status`.`id`=`product`.`status_id`) ";
 
         if (search.equals("Search products") || search.isEmpty() || search == null) {
             query += "";
         } else {
             query += "WHERE `product`.`name` LIKE '" + search + "%'";
         }
+
+        query += "ORDER BY `product`.`id` ASC";
         try {
             ResultSet resultSet = MySQL.execute(query);
 
@@ -59,7 +61,7 @@ public class ProductTableModel extends javax.swing.JPanel {
             model.setRowCount(0);
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
-                vector.add("SUP-" + resultSet.getString("product.id"));
+                vector.add("PRD-" + resultSet.getString("product.id"));
                 vector.add(resultSet.getString("product.name"));
                 vector.add(resultSet.getString("brand.name"));
                 vector.add(resultSet.getString("category.name"));
@@ -80,7 +82,7 @@ public class ProductTableModel extends javax.swing.JPanel {
             product.getProductSaveBtn().setEnabled(false);
             product.getProductName().setEditable(false);
             product.getSelectBrand().setEnabled(false);
-            
+
             product.getProductID().setText(String.valueOf(jTable2.getValueAt(row, 0)));
             product.getProductName().setText(String.valueOf(jTable2.getValueAt(row, 1)));
             product.getBrandName().setText(String.valueOf(jTable2.getValueAt(row, 2)));

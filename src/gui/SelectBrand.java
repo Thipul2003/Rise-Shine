@@ -2,6 +2,7 @@ package gui;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
@@ -49,6 +50,7 @@ public class SelectBrand extends javax.swing.JDialog {
             ResultSet resultSet = MySQL.execute(query);
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String brand_name = resultSet.getString("name");
                 String path = resultSet.getString("img");
 
@@ -66,11 +68,19 @@ public class SelectBrand extends javax.swing.JDialog {
                             @Override
                             public void mouseClicked(MouseEvent e) {
 
-                                if (e.getClickCount() == 2 && e.getButton() == 1) {
-                                    System.out.println("Success");
+                                brandMouseClicked(e, id, brand_name, t);
 
-                                }
+                            }
 
+                            @Override
+                            public void mouseEntered(MouseEvent me) {
+                                t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 3, 50));
+
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent me) {
+                                t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
                             }
                         }
                         );
@@ -80,10 +90,19 @@ public class SelectBrand extends javax.swing.JDialog {
                             @Override
                             public void mouseClicked(MouseEvent e
                             ) {
-                                if (e.getClickCount() == 2 && e.getButton() == 1) {
-                                    System.out.println("Success");
-                                }
 
+                                brandMouseClicked(e, id, brand_name, t);
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent me) {
+                                t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 3, 50));
+
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent me) {
+                                t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
                             }
                         }
                         );
@@ -97,6 +116,16 @@ public class SelectBrand extends javax.swing.JDialog {
 
         }
 
+    }
+
+    private void brandMouseClicked(MouseEvent e, int id, String name, brandPanel t) {
+        if (e.getClickCount() == 2 && e.getButton() == 1) {
+            product.setBrand_id(id);
+            product.getBrandName().setText(name);
+            this.dispose();
+        } else if (e.getClickCount() == 1 && e.getButton() == 3) {
+            t.getMain().setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16), new Color(119, 82, 254), 1, 50));
+        }
     }
 
     @SuppressWarnings("unchecked")

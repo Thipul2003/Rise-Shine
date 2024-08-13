@@ -293,7 +293,7 @@
                           <Color id="Hand Cursor"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="2"/>
-                        <Property name="iconTextGap" type="int" value="34"/>
+                        <Property name="iconTextGap" type="int" value="28"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                           <Insets value="[2, 80, 2, 14]"/>
                         </Property>
@@ -354,7 +354,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/img/icons8-tag-25.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Brand Registeration"/>
+                        <Property name="text" type="java.lang.String" value="Brand Register"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Hand Cursor"/>
                         </Property>
@@ -387,7 +387,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/img/icons8-category-25.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Category Registeration"/>
+                        <Property name="text" type="java.lang.String" value="Category Register"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Hand Cursor"/>
                         </Property>
@@ -505,7 +505,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/img/icons8-company-25.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Company Registration"/>
+                        <Property name="text" type="java.lang.String" value="Company Register"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Hand Cursor"/>
                         </Property>
